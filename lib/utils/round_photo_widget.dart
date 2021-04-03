@@ -5,16 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-class PhotoOverlay extends StatefulWidget {
+class RoundPhotoWidget extends StatefulWidget {
   final AssetImage image;
 
-  const PhotoOverlay({Key key, this.image}) : super(key: key);
+  RoundPhotoWidget({
+    Key key,
+    @required this.image,
+  }) : super(key: key);
 
   @override
-  State<PhotoOverlay> createState() => _PhotoOverlayState();
+  State<RoundPhotoWidget> createState() => _RoundPhotoWidgetState();
 }
 
-class _PhotoOverlayState extends State<PhotoOverlay> {
+class _RoundPhotoWidgetState extends State<RoundPhotoWidget> {
   ui.Image _image;
 
   @override
@@ -33,8 +36,12 @@ class _PhotoOverlayState extends State<PhotoOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: PhotoPainter(_image),
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: CustomPaint(
+        painter: PhotoPainter(_image),
+      ),
     );
   }
 }
@@ -55,6 +62,7 @@ class PhotoPainter extends CustomPainter {
 
   Canvas _drawCanvas(Size size, Canvas canvas) {
     _paint.style = PaintingStyle.fill;
+    _paint.isAntiAlias = true;
     _path.moveTo(0, size.height * 0.3);
     _path.quadraticBezierTo(
         size.width / 2, size.height / 2, size.width, size.height * 0.30);
@@ -67,7 +75,5 @@ class PhotoPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

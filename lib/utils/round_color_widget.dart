@@ -3,6 +3,19 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:travel_app/themes/app_colors.dart';
 
+class RoundColorWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: CustomPaint(
+        painter: ColorPainter(),
+      ),
+    );
+  }
+}
+
 class ColorPainter extends CustomPainter {
   final Paint _paint;
   final Path _path;
