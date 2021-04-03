@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/themes/app_colors.dart';
 import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
+import 'package:travel_app/ui/widgets/indicator_widget.dart';
 import 'package:travel_app/utils/login_screen_photo.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -25,7 +27,8 @@ class IntroScreen extends StatelessWidget {
                         padding: EdgeInsets.all(AppDimen.xlPadding),
                         child: Text(
                           "Hello there,Welcome Onboard!",
-                          style: AppTextStyle.headline2,
+                          style: AppTextStyle.headline2
+                              .copyWith(color: AppColors.white),
                         ),
                       ),
                     ],
@@ -51,6 +54,7 @@ class IntroScreen extends StatelessWidget {
                       onTap: () => print("tapped"),
                     ),
                   ),
+                  DotIndicatorWidget(total: 3, selected: 0)
                 ],
               ),
             ),
