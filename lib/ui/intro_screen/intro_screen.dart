@@ -1,16 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
-import 'package:travel_app/utils/round_photo_widget.dart';
+import 'package:travel_app/themes/app_text_styles.dart';
+import 'package:travel_app/ui/widgets/blurred_button.dart';
+import 'package:travel_app/utils/login_screen_photo.dart';
 
 class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        RoundPhotoWidget(
-          image: AppIcons.mainPhoto,
+    return SafeArea(
+      child: Material(
+        type: MaterialType.transparency,
+        child: Stack(
+          children: [
+            FullScreenPhoto(image: AppIcons.lights),
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(AppDimen.xlPadding),
+                        child: Text(
+                          "Hello there,Welcome Onboard!",
+                          style: AppTextStyle.headline2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(AppDimen.smallPadding),
+                    child: BlurredButton(
+                      text: "Continue with Facebook",
+                      onTap: () => print("tapped"),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(AppDimen.smallPadding),
+                    child: BlurredButton(
+                      text: "Login with email",
+                      onTap: () => print("tapped"),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(AppDimen.smallPadding),
+                    child: BlurredButton(
+                      text: "Create account",
+                      onTap: () => print("tapped"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
