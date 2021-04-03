@@ -54,7 +54,7 @@ class IntroScreen extends StatelessWidget {
                       onTap: () => print("tapped"),
                     ),
                   ),
-                  DotIndicatorWidget(total: 3, selected: 0)
+                  IndicatorWidget(total: 3, selected: 0)
                 ],
               ),
             ),

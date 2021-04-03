@@ -3,12 +3,12 @@ import 'package:travel_app/themes/app_colors.dart';
 import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
 
-class DotIndicatorWidget extends StatelessWidget {
+class IndicatorWidget extends StatelessWidget {
   static final int max = 5;
   final int selected;
   final int total;
 
-  const DotIndicatorWidget({Key key, @required this.total, @required selected})
+  const IndicatorWidget({Key key, @required this.total, @required selected})
       : this.selected = selected ?? 0,
         super(key: key);
 
