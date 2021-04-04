@@ -5,7 +5,7 @@ import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/ui/widgets/indicator_widget.dart';
-import 'package:travel_app/utils/login_screen_photo.dart';
+import 'package:travel_app/utils/fulscreen_photo.dart';
 
 class IntroScreen extends StatelessWidget {
   @override
