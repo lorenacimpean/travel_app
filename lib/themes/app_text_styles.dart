@@ -39,4 +39,9 @@ class AppTextStyle {
     fontSize: AppDimen.subtitle1,
     fontWeight: FontWeight.normal,
   );
+  static const TextStyle button2 = TextStyle(
+    color: AppColors.white,
+    fontSize: AppDimen.headline2,
+    fontWeight: FontWeight.normal,
+  );
 }
