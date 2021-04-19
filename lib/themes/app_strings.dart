@@ -8,4 +8,5 @@ class AppStrings {
   static const String emailAddress = "Email";
   static const String password = "Password";
   static const String confirmPassword = "Confirm password";
+  static const String login = "Login";
 }

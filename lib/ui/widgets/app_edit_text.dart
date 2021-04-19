@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_app/themes/app_colors.dart';
+import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_strings.dart';
+import 'package:travel_app/themes/app_text_styles.dart';
 
 enum FieldType {
   firstName,
@@ -18,6 +21,7 @@ class AppInputFieldWidget extends StatelessWidget {
   final String label;
   final String error;
   final ValueChanged<String> onValueChanged;
+  final AssetImage image;
 
   AppInputFieldWidget({
     Key key,
@@ -26,6 +30,7 @@ class AppInputFieldWidget extends StatelessWidget {
     this.label,
     this.error,
     this.onValueChanged,
+    this.image,
   }) : super(key: key);
 
   factory AppInputFieldWidget.fromModel({AppInputFieldModel model}) {
@@ -43,26 +48,39 @@ class AppInputFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      style: error == null
-          ? Theme.of(context).textTheme.subtitle2
-          : Theme.of(context).textTheme.button,
-      controller: controller,
-      decoration: InputDecoration(
-        errorText: error,
-        enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-                color: error == null
-                    ? Theme.of(context).primaryColor
-                    : Theme.of(context).errorColor,
-                width: 2)),
-        labelText: label,
-        labelStyle: error == null
-            ? Theme.of(context).textTheme.subtitle1
-            : Theme.of(context).textTheme.button,
-      ),
-      keyboardType: textInputType,
-      onChanged: onValueChanged,
+    return Stack(
+      children: [
+        TextField(
+          style: error == null
+              ? Theme.of(context).textTheme.subtitle2
+              : Theme.of(context).textTheme.button,
+          controller: controller,
+          decoration: InputDecoration(
+            errorText: error,
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: error == null
+                      ? AppColors.darkGrey
+                      : Theme.of(context).errorColor,
+                  width: AppDimen.separatorSize),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+                  color: error == null
+                      ? AppColors.darkGrey
+                      : Theme.of(context).errorColor,
+                  width: AppDimen.separatorSize),
+            ),
+            labelText: label,
+            labelStyle: error == null
+                ? AppTextStyle.subtitle1
+                : Theme.of(context).textTheme.button,
+          ),
+          keyboardType: textInputType,
+          onChanged: onValueChanged,
+        ),
+        Image(image: image),
+      ],
     );
   }
 }

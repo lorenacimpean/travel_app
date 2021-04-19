@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:travel_app/themes/app_colors.dart';
+import 'package:travel_app/themes/app_dimen.dart';
 
 class FormContainer extends StatelessWidget {
   final List<Widget> formFields;
@@ -12,9 +14,21 @@ class FormContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        child: Column(
-          children: formFields,
+      child: Container(
+        margin: EdgeInsets.all(AppDimen.defaultPadding),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          boxShadow: [AppColors.defaultShadow],
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(AppDimen.defaultPadding),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: formFields,
+          ),
         ),
       ),
     );

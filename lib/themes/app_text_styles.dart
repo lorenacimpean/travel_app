@@ -44,4 +44,9 @@ class AppTextStyle {
     fontSize: AppDimen.headline2,
     fontWeight: FontWeight.normal,
   );
+  static const TextStyle label = TextStyle(
+    color: AppColors.darkGrey,
+    fontSize: AppDimen.headline2,
+    fontWeight: FontWeight.normal,
+  );
 }
