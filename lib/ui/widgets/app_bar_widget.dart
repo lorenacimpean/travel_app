@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final double _appBarHeight = 100;
 
   const CustomAppBar(
     this.title, {
@@ -23,5 +23,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(_appBarHeight);
+  Size get preferredSize => Size.fromHeight(AppDimen.appBarHeight);
 }

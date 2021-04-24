@@ -37,25 +37,21 @@ class IntroScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(AppDimen.smallPadding),
                     child: BlurredButton(
-                        text: "Continue with Facebook",
-                        onTap: () =>
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) =>
-                                  LoginScreen()),
-                            ),
+                      text: "Continue with Facebook",
+                      onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(AppDimen.smallPadding),
                     child: BlurredButton(
                       text: "Login with email",
-                      onTap: () =>
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                LoginScreen()),
-                          ),
+                      onTap: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ),
                     ),
                   ),
                   Padding(

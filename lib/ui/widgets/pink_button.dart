@@ -7,9 +7,6 @@ import 'package:travel_app/themes/app_dimen.dart';
 class PinkButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
-  final double _sigmaX = 10.0; // from 0-10
-  final double _sigmaY = 10.0; // from 0-10
-  final double _opacity = 0.2; // from 0-1.0
 
   const PinkButton({
     Key key,
@@ -19,17 +16,7 @@ class PinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //   return Container(
-    //     child: BackdropFilter(
-    //       filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
-    //       child: Container(
-    //         color: AppColors.lightGrey.withOpacity(_opacity),
-    //       ),
-    //     ),
-    //   );
-    // }
-
-    return RaisedButton(
+    return MaterialButton(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(

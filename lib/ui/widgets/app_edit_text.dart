@@ -39,8 +39,9 @@ class AppInputFieldWidget extends StatelessWidget {
       controller: model.textController,
       label: model.label,
       error: model.error,
+      image: model.image,
       onValueChanged: (newValue) {
-        model.value = newValue;
+        model.textValue = newValue;
         model.onValueChanged(model);
       },
     );
@@ -50,36 +51,48 @@ class AppInputFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        TextField(
-          style: error == null
-              ? Theme.of(context).textTheme.subtitle2
-              : Theme.of(context).textTheme.button,
-          controller: controller,
-          decoration: InputDecoration(
-            errorText: error,
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  color: error == null
-                      ? AppColors.darkGrey
-                      : Theme.of(context).errorColor,
-                  width: AppDimen.separatorSize),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                  color: error == null
-                      ? AppColors.darkGrey
-                      : Theme.of(context).errorColor,
-                  width: AppDimen.separatorSize),
-            ),
-            labelText: label,
-            labelStyle: error == null
-                ? AppTextStyle.subtitle1
+        Align(
+          alignment: Alignment.topLeft,
+          child: TextField(
+            style: error == null
+                ? Theme.of(context).textTheme.subtitle2
                 : Theme.of(context).textTheme.button,
+            controller: controller,
+            decoration: InputDecoration(
+              errorText: error,
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: error == null
+                        ? AppColors.darkGrey
+                        : Theme.of(context).errorColor,
+                    width: AppDimen.separatorSize),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: error == null
+                        ? AppColors.darkGrey
+                        : Theme.of(context).errorColor,
+                    width: AppDimen.separatorSize),
+              ),
+              labelText: label,
+              labelStyle: error == null
+                  ? AppTextStyle.subtitle1
+                  : Theme.of(context).textTheme.button,
+            ),
+            keyboardType: textInputType,
+            onChanged: onValueChanged,
           ),
-          keyboardType: textInputType,
-          onChanged: onValueChanged,
         ),
-        Image(image: image),
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: AppDimen.defaultPadding,
+              right: AppDimen.smallPadding,
+            ),
+            child: Image(image: image),
+          ),
+        ),
       ],
     );
   }
@@ -89,15 +102,18 @@ class AppInputFieldModel {
   final FieldType fieldType;
   final TextEditingController textController;
   final OnAppInputFieldChange onValueChanged;
+  final AssetImage image;
   String error;
-  String value;
+  String textValue;
 
-  AppInputFieldModel(
-      {this.fieldType,
-      this.textController,
-      this.error,
-      this.value,
-      this.onValueChanged});
+  AppInputFieldModel({
+    @required this.image,
+    @required this.textValue,
+    @required this.fieldType,
+    this.textController,
+    this.error,
+    this.onValueChanged,
+  });
 
   String get label {
     switch (fieldType) {
@@ -141,7 +157,7 @@ class AppInputFieldModel {
   }
 
   @override
-  int get hashCode => fieldType.hashCode ^ error.hashCode ^ value.hashCode;
+  int get hashCode => fieldType.hashCode ^ error.hashCode ^ textValue.hashCode;
 
   @override
   bool operator ==(other) =>
@@ -149,5 +165,5 @@ class AppInputFieldModel {
       other is AppInputFieldModel &&
           fieldType == other.fieldType &&
           error == other.error &&
-          value == other.value;
+          textValue == other.textValue;
 }

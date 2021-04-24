@@ -19,14 +19,13 @@ class FormContainer extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(AppDimen.mediumCornerRadius),
           ),
           boxShadow: [AppColors.defaultShadow],
         ),
         child: Padding(
           padding: EdgeInsets.all(AppDimen.defaultPadding),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: Wrap(
             children: formFields,
           ),
         ),
