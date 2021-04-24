@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/ui/dummy_screen.dart';
-import 'package:travel_app/ui/login_screen/login_view_model.dart';
+import 'package:travel_app/ui/sign_up/sign_up_view_model.dart';
 import 'package:travel_app/ui/widgets/app_dialog.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
@@ -11,19 +11,19 @@ import 'package:travel_app/ui/widgets/form_screen.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/ui_model.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends BaseState<LoginScreen> {
-  LoginViewModel _vm;
+class _SignUpScreenState extends BaseState<SignUpScreen> {
+  SignUpViewModel _vm;
   List<AppInputFieldModel> _formModels = [];
 
   @override
   void initState() {
     super.initState();
-    _vm = LoginViewModel(Input(
+    _vm = SignUpViewModel(Input(
       PublishSubject(),
       PublishSubject(),
       PublishSubject(),
@@ -42,7 +42,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
         _formModels = response;
       });
     }));
-    disposeLater(_vm.output.onLoginResult.listen((response) {
+    disposeLater(_vm.output.onSignUpResult.listen((response) {
       setState(() {
         switch (response.state) {
           case OperationState.loading:
@@ -88,8 +88,8 @@ class _LoginScreenState extends BaseState<LoginScreen> {
       title: AppStrings.login,
       body: FormContainer(
         formFields: _formFields(),
-        buttonText: "Sign in",
-        onTap: () => _vm.input.signIn.add(true),
+        buttonText: "Create Account",
+        onTap: () => _vm.input.signUp.add(true),
       ),
     );
   }

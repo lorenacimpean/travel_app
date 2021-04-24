@@ -36,7 +36,18 @@ class AppTextValidator {
     }
   }
 
-  String validate(AppInputFieldModel model) {
+  String confirmPasswordValidator(String confirm, String password) {
+    if (confirm == null || confirm.isEmpty) {
+      return AppStrings.fieldEmptyError;
+    } else {
+      if (confirm != password)
+        return AppStrings.passwordsDoNotMatch;
+      else
+        return null;
+    }
+  }
+
+  String validate(AppInputFieldModel model, {String password}) {
     switch (model.fieldType) {
       case FieldType.emailAddress:
         return emailValidator(model.textValue);
@@ -45,7 +56,7 @@ class AppTextValidator {
         return passwordValidator(model.textValue);
         break;
       case FieldType.confirmPassword:
-        return passwordValidator(model.textValue);
+        return confirmPasswordValidator(model.textValue, password);
         break;
       default:
         return null;

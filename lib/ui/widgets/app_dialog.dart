@@ -18,6 +18,7 @@ class AppDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        color: AppColors.white,
         padding: EdgeInsets.symmetric(
           vertical: AppDimen.defaultPadding,
           horizontal: AppDimen.xlPadding,

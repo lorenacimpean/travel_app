@@ -15,6 +15,7 @@ class AppStrings {
   static const String fieldEmptyError = "Required";
   static const String fieldInvalidError = "Minimum 6 characters";
   static const String emailFieldInvalidError = "Invalid email";
+  static const String passwordsDoNotMatch = "Passwords do not match";
 
   static const String noInternet = "No internet connection!";
   static const String retry = "Retry";
