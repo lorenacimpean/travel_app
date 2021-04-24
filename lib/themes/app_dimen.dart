@@ -1,7 +1,3 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
-
 class AppDimen {
   static final double xxxlPadding = 120;
   static final double xlPadding = 64.0;
@@ -21,10 +17,11 @@ class AppDimen {
   static final double separatorSize = 1.0;
 
   //widget sizes:
-  static final Size appBarHeight = Size.fromHeight(100.0);
+  static final double appBarHeight = 100.0;
 
   //widget radius
   static const double defaultCornerRadius = 20.0;
+  static const double mediumCornerRadius = 10.0;
   static const double smallCornerRadius = 5.0;
 
   //durations

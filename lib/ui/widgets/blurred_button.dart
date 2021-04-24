@@ -9,7 +9,6 @@ class BlurredButton extends StatelessWidget {
   final VoidCallback onTap;
   final double _sigmaX = 10.0; // from 0-10
   final double _sigmaY = 10.0; // from 0-10
-  final double _opacity = 0.2; // from 0-1.0
 
   const BlurredButton({
     Key key,
