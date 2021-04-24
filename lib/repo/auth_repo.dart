@@ -6,10 +6,19 @@ class AuthRepo {
 
   Stream<UserCredential> login({
     @required String email,
-    String password,
+    @required String password,
   }) {
     return _auth
         .signInWithEmailAndPassword(email: email, password: password)
+        .asStream();
+  }
+
+  Stream<UserCredential> signUp({
+    @required String email,
+    @required String password,
+  }) {
+    return _auth
+        .createUserWithEmailAndPassword(email: email, password: password)
         .asStream();
   }
 }

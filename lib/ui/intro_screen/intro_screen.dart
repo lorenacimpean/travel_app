@@ -4,6 +4,7 @@ import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/login_screen/login_screen.dart';
+import 'package:travel_app/ui/sign_up/sign_up_screen.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/ui/widgets/indicator_widget.dart';
 import 'package:travel_app/utils/fulscreen_photo.dart';
@@ -48,7 +49,7 @@ class IntroScreen extends StatelessWidget {
                     padding: EdgeInsets.all(AppDimen.smallPadding),
                     child: BlurredButton(
                       text: "Login with email",
-                      onTap: () => Navigator.pushReplacement(
+                      onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                       ),
@@ -58,7 +59,10 @@ class IntroScreen extends StatelessWidget {
                     padding: EdgeInsets.all(AppDimen.smallPadding),
                     child: BlurredButton(
                       text: "Create account",
-                      onTap: () => print("tapped"),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                      ),
                     ),
                   ),
                   IndicatorWidget(total: 3, selected: 0)
