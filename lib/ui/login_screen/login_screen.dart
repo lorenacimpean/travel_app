@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/themes/app_strings.dart';
+import 'package:travel_app/ui/dummy_screen.dart';
 import 'package:travel_app/ui/login_screen/login_view_model.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/form_screen.dart';
 import 'package:travel_app/utils/base_state.dart';
+import 'package:travel_app/utils/ui_model.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -22,6 +25,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
     _vm = LoginViewModel(Input(
       PublishSubject(),
       PublishSubject(),
+      PublishSubject(),
     ));
 
     _bindViewModel();
@@ -34,16 +38,31 @@ class _LoginScreenState extends BaseState<LoginScreen> {
         _formModels = models;
       });
     }));
+    disposeLater(_vm.output.onSignIn.listen((response) {
+      switch (response.state) {
+        case OperationState.loading:
+          // TODO: Handle this case.
+          break;
+        case OperationState.error:
+          // TODO: Handle this case.
+          break;
+        case OperationState.ok:
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => DummyScreen(),
+            ),
+          );
+          break;
+      }
+    }));
   }
 
   List<Widget> _formFields() {
     List<Widget> list = [];
     _formModels.forEach((model) {
       list.add(
-        Expanded(
-          child: AppInputFieldWidget.fromModel(
-            model: model,
-          ),
+        AppInputFieldWidget.fromModel(
+          model: model,
         ),
       );
     });
@@ -57,6 +76,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
       body: FormContainer(
         formFields: _formFields(),
         buttonText: "Sign in",
+        onTap: () => _vm.input.signIn.add(true),
       ),
     );
   }

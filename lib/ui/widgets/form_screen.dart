@@ -58,6 +58,7 @@ class FormContainer extends StatelessWidget {
         margin: EdgeInsets.only(top: AppDimen.largePadding),
         child: PinkButton(
           text: buttonText,
+          onTap: onTap,
         ),
       ),
     );
