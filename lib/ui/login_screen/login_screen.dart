@@ -54,7 +54,10 @@ class _LoginScreenState extends BaseState<LoginScreen> {
   Widget build(BuildContext context) {
     return AppScreen(
       title: AppStrings.login,
-      body: FormContainer(formFields: _formFields()),
+      body: FormContainer(
+        formFields: _formFields(),
+        buttonText: "Sign in",
+      ),
     );
   }
 }

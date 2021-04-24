@@ -1,7 +1,3 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
-
 class AppDimen {
   static final double xxxlPadding = 120;
   static final double xlPadding = 64.0;

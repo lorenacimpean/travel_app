@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:travel_app/themes/app_colors.dart';
 import 'package:travel_app/themes/app_dimen.dart';
+import 'package:travel_app/themes/app_text_styles.dart';
 
 class PinkButton extends StatelessWidget {
   final String text;
@@ -26,9 +27,16 @@ class PinkButton extends StatelessWidget {
       ),
       color: AppColors.primary,
       textColor: AppColors.white,
-      child: Text(
-        text,
-        overflow: TextOverflow.ellipsis,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: AppDimen.smallPadding,
+          horizontal: AppDimen.midLargePadding,
+        ),
+        child: Text(
+          text,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyle.button2,
+        ),
       ),
       onPressed: onTap,
       disabledColor: AppColors.lightGrey,
