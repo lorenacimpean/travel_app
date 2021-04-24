@@ -6,18 +6,21 @@ import 'package:travel_app/repo/auth_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/utils/dependency_factory.dart';
-import 'package:travel_app/utils/ui_model.dart';
+import 'package:travel_app/utils/field_validator.dart';
 
 class LoginViewModel {
   final Input input;
   final AuthRepo _authRepo;
   Output output;
   List<AppInputFieldModel> _list = [];
+  final AppTextValidator _validator;
 
   LoginViewModel(
     this.input, {
     AuthRepo authRepo,
-  }) : _authRepo = authRepo ?? DependencyFactory.authRepo() {
+    AppTextValidator validator,
+  })  : _authRepo = authRepo ?? DependencyFactory.authRepo(),
+        _validator = validator ?? DependencyFactory.appTextValidator() {
     Stream<List<AppInputFieldModel>> _loginFields =
         input.loadFields.flatMap((value) {
       _list.add(AppInputFieldModel(
@@ -51,22 +54,33 @@ class LoginViewModel {
       return _list;
     });
 
-    Stream<UIModel<bool>> _onSignIn = input.signIn.flatMap((_) {
-      try {
-        return _authRepo
-            .login(
-                email: _list?.first?.textValue,
-                password: _list?.last?.textValue)
-            .map((result) {
-          return UIModel.success(true);
-        }).startWith(UIModel.loading());
-      } catch (e) {
-        debugPrint(e.toString());
-        return Stream.error(UIModel<bool>.error(e));
+    Stream<List<AppInputFieldModel>> _onSignIn = input.signIn.flatMap((_) {
+      _list.forEach((model) {
+        model.error = _validator.validate(model);
+      });
+      if (_list.areAllFieldsValid()) {
+        try {
+          return _authRepo
+              .login(
+                  email: _list?.first?.textValue,
+                  password: _list?.last?.textValue)
+              .map((result) {
+            debugPrint("Got user ${result.credential}");
+            return _list;
+          });
+        } catch (e) {
+          debugPrint(e.toString());
+          return Stream.error(e.toString());
+        }
       }
+      return Stream.value(_list);
     });
 
-    output = Output(MergeStream([_loginFields, _fieldsChanged]), _onSignIn);
+    output = Output(MergeStream([
+      _loginFields,
+      _fieldsChanged,
+      _onSignIn,
+    ]));
   }
 }
 
@@ -84,7 +98,6 @@ class Input {
 
 class Output {
   final Stream<List<AppInputFieldModel>> onFieldsLoaded;
-  final Stream<UIModel<bool>> onSignIn;
 
-  Output(this.onFieldsLoaded, this.onSignIn);
+  Output(this.onFieldsLoaded);
 }

@@ -5,13 +5,7 @@ import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 
-enum FieldType {
-  firstName,
-  lastName,
-  emailAddress,
-  password,
-  confirmPassword,
-}
+enum FieldType { emailAddress, password, confirmPassword }
 
 typedef OnAppInputFieldChange(AppInputFieldModel model);
 
@@ -53,7 +47,7 @@ class AppInputFieldWidget extends StatelessWidget {
       children: [
         Align(
           alignment: Alignment.topLeft,
-          child: TextField(
+          child: TextFormField(
             style: error == null
                 ? Theme.of(context).textTheme.subtitle2
                 : Theme.of(context).textTheme.button,
@@ -81,6 +75,7 @@ class AppInputFieldWidget extends StatelessWidget {
             ),
             keyboardType: textInputType,
             onChanged: onValueChanged,
+            obscureText: textInputType == TextInputType.visiblePassword,
           ),
         ),
         Align(
@@ -117,12 +112,6 @@ class AppInputFieldModel {
 
   String get label {
     switch (fieldType) {
-      case FieldType.firstName:
-        return AppStrings.firstName;
-        break;
-      case FieldType.lastName:
-        return AppStrings.lastName;
-        break;
       case FieldType.emailAddress:
         return AppStrings.emailAddress;
         break;
@@ -140,10 +129,6 @@ class AppInputFieldModel {
 
   TextInputType get textInputType {
     switch (fieldType) {
-      case FieldType.firstName:
-      case FieldType.lastName:
-        return TextInputType.text;
-        break;
       case FieldType.emailAddress:
         return TextInputType.emailAddress;
         break;
@@ -166,4 +151,20 @@ class AppInputFieldModel {
           fieldType == other.fieldType &&
           error == other.error &&
           textValue == other.textValue;
+}
+
+extension ModelFromFieldType on List<AppInputFieldModel> {
+  AppInputFieldModel getModelFromFieldType(FieldType fieldType) {
+    AppInputFieldModel model = this?.firstWhere(
+        (model) => model.fieldType == fieldType,
+        orElse: () => null);
+    return model;
+  }
+
+  bool areAllFieldsValid() {
+    return this.firstWhere(
+            (field) => field.error != null || field.textValue == null,
+            orElse: () => null) ==
+        null;
+  }
 }

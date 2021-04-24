@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/themes/app_strings.dart';
-import 'package:travel_app/ui/dummy_screen.dart';
 import 'package:travel_app/ui/login_screen/login_view_model.dart';
+import 'package:travel_app/ui/widgets/app_dialog.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/form_screen.dart';
 import 'package:travel_app/utils/base_state.dart';
-import 'package:travel_app/utils/ui_model.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -33,27 +32,13 @@ class _LoginScreenState extends BaseState<LoginScreen> {
   }
 
   void _bindViewModel() {
-    disposeLater(_vm.output.onFieldsLoaded.listen((models) {
+    disposeLater(_vm.output.onFieldsLoaded.listen((response) {
       setState(() {
-        _formModels = models;
+        if (response is Error) {
+          _displayErrorModal(this.context, response.toString());
+        }
+        _formModels = response;
       });
-    }));
-    disposeLater(_vm.output.onSignIn.listen((response) {
-      switch (response.state) {
-        case OperationState.loading:
-          // TODO: Handle this case.
-          break;
-        case OperationState.error:
-          // TODO: Handle this case.
-          break;
-        case OperationState.ok:
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => DummyScreen(),
-            ),
-          );
-          break;
-      }
     }));
   }
 
@@ -67,6 +52,16 @@ class _LoginScreenState extends BaseState<LoginScreen> {
       );
     });
     return list;
+  }
+
+  void _displayErrorModal(BuildContext context, String error) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AppDialog(
+            text: error.toString(),
+          );
+        });
   }
 
   @override
