@@ -53,12 +53,19 @@ class LoginViewModel {
 class Input {
   final Subject<bool> loadFields;
   final Subject<AppInputFieldModel> valueChanged;
+  final Subject<bool> signIn;
 
-  Input(this.loadFields, this.valueChanged);
+  Input(
+    this.loadFields,
+    this.valueChanged,
+    this.signIn,
+  );
 }
 
 class Output {
   final Stream<List<AppInputFieldModel>> onFieldsLoaded;
+  final Stream<UiMode> onFieldsLoaded;
+
 
   Output(this.onFieldsLoaded);
 }
