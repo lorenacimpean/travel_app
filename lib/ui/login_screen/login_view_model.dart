@@ -22,25 +22,25 @@ class LoginViewModel {
     AppTextValidator validator,
   })  : _authRepo = authRepo ?? DependencyFactory.authRepo(),
         _validator = validator ?? DependencyFactory.appTextValidator() {
-    Stream<UIModel<bool>> _loginResult() {
+    Stream<UIModel<bool>> _loginResult = input.signIn.flatMap((value) {
       if (_list.isNotEmpty) {
         try {
           return _authRepo
-              .signUp(
+              .login(
                   email: _list?.first?.textValue,
                   password: _list?.last?.textValue)
               .asBroadcastStream()
               .map((result) {
-            debugPrint("Signed up with ${result.credential.signInMethod}");
+            debugPrint("Successfully logged in");
             return UIModel.success(true);
           });
         } catch (e) {
-          debugPrint(e.toString());
+          debugPrint("Login error: ${e.toString()}");
           return Stream.value(UIModel.error(e));
         }
       }
       return Stream.empty();
-    }
+    });
 
     Stream<List<AppInputFieldModel>> _loginFields =
         input.loadFields.flatMap((value) {
@@ -80,7 +80,7 @@ class LoginViewModel {
         model.error = _validator.validate(model);
       });
       if (_list.areAllFieldsValid()) {
-        _loginResult().map((value) {
+        _loginResult.map((value) {
           return _list;
         });
       }
@@ -93,7 +93,7 @@ class LoginViewModel {
           _fieldsChanged,
           _onSignIn,
         ]),
-        _loginResult());
+        _loginResult);
   }
 }
 
