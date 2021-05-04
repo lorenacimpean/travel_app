@@ -5,11 +5,15 @@ import 'package:travel_app/themes/app_text_styles.dart';
 class AppScreen extends StatelessWidget {
   final String title;
   final Widget body;
+  final AssetImage leftIcon;
+  final AssetImage rightIcon;
 
   const AppScreen({
     Key key,
     @required this.title,
     @required this.body,
+    this.leftIcon,
+    this.rightIcon,
   }) : super(key: key);
 
   @override
@@ -18,13 +22,20 @@ class AppScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           color: AppColors.primary,
-          icon: Icon(Icons.add),
+          icon: leftIcon != null ? Image(image: leftIcon) : Container(),
           onPressed: () => print("Tapped drawer"),
         ),
         title: Text(
           title,
           style: AppTextStyle.headline1,
         ),
+        actions: [
+          IconButton(
+            color: AppColors.primary,
+            icon: rightIcon != null ? Image(image: rightIcon) : Container(),
+            onPressed: () => print("Tapped right icon"),
+          ),
+        ],
         backgroundColor: AppColors.white,
         elevation: 0,
       ),

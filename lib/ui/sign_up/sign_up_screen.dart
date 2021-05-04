@@ -28,7 +28,6 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
       PublishSubject(),
       PublishSubject(),
     ));
-
     _bindViewModel();
     _vm.input.loadFields.add(true);
   }
