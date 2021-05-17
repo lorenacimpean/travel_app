@@ -31,10 +31,13 @@ class BlurredButton extends StatelessWidget {
             filter: ImageFilter.blur(sigmaX: _sigmaX, sigmaY: _sigmaY),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: AppDimen.smallPadding),
-              child: Text(
-                text,
+              child: RichText(
+                maxLines: 5,
+                text: TextSpan(
+                  text: text,
+                  style: AppTextStyle.button2,
+                ),
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.button2,
               ),
             ),
           ),

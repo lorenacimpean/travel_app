@@ -24,4 +24,12 @@ class AppStrings {
   static const String errorWhileLoading = "Error while loading";
   static const String photoListError = "Photo list is not available";
   static const String generalError = "Something went wrong!";
+
+  //Discover screen
+  static const String discover = "Discover";
+
+  static const String dummyText =
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ";
+
+// "Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f";
 }

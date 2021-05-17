@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/themes/app_strings.dart';
-import 'package:travel_app/ui/dummy_screen.dart';
+import 'package:travel_app/ui/discover_screen/discover_screen.dart';
 import 'package:travel_app/ui/login_screen/login_view_model.dart';
 import 'package:travel_app/ui/widgets/app_dialog.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
@@ -53,7 +53,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
             break;
           case OperationState.ok:
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DummyScreen()));
+                MaterialPageRoute(builder: (context) => DiscoverScreen()));
             break;
         }
       });

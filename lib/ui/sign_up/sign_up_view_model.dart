@@ -22,7 +22,7 @@ class SignUpViewModel {
     AppTextValidator validator,
   })  : _authRepo = authRepo ?? DependencyFactory.authRepo(),
         _validator = validator ?? DependencyFactory.appTextValidator() {
-    Stream<UIModel<bool>> _signUpResult() {
+    Stream<UIModel<bool>> _signUpResult = input.signUp.flatMap((value) {
       if (_list.isNotEmpty) {
         try {
           return _authRepo
@@ -40,7 +40,7 @@ class SignUpViewModel {
         }
       }
       return Stream.empty();
-    }
+    });
 
     Stream<List<AppInputFieldModel>> _signUpFields =
         input.loadFields.flatMap((value) {
@@ -94,7 +94,7 @@ class SignUpViewModel {
         model.error = _validator.validate(model, password: password);
       });
       if (_list.areAllFieldsValid()) {
-        _signUpResult().map((value) {
+        _signUpResult.map((value) {
           return _list;
         });
       }
@@ -107,7 +107,7 @@ class SignUpViewModel {
           _fieldsChanged,
           _onSignIn,
         ]),
-        _signUpResult());
+        _signUpResult);
   }
 }
 
