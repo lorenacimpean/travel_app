@@ -18,3 +18,9 @@ extension ListExtensions<T> on List<T> {
     return true;
   }
 }
+extension DynamicListExtension on List<dynamic> {
+  List<T> toObjectList<T>(T Function(dynamic e) f) {
+    if (this is! List || this == null) return null;
+    return map(f).toList();
+  }
+}
