@@ -12,10 +12,11 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.0
-  path_provider: ^1.6.28
+  path_provider: ^2.0.1
   rxdart: ^0.26.0
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.1
+  firebase_core: ^1.1.1
+  firebase_auth: ^1.1.4
+  cloud_firestore: ^2.1.0
 
 dev_dependencies:
   pedantic: ^1.9.2
