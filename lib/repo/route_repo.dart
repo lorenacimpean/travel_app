@@ -12,4 +12,6 @@ class RouteRepo {
   Stream<PointModel> getPoints(String pointId) => _api.getPoints(pointId);
 
   Stream<RouteModel> getRoute(String routeId) => _api.getRoute(routeId);
+
+  Stream<List<RouteModel>> get routes => _api.getRoutes();
 }

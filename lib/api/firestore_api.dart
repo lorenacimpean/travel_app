@@ -26,4 +26,9 @@ class FirestoreApi {
         .asStream()
         .map((snapshot) => RouteModel.fromJson(snapshot.data()));
   }
+
+  Stream<List<RouteModel>> getRoutes() {
+    return _firestore.collection(ApiKey.routes).snapshots().map((snap) =>
+        snap.docs.map((doc) => RouteModel.fromJson(doc.data())).toList());
+  }
 }
