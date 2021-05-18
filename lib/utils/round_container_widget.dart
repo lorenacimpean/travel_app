@@ -14,7 +14,7 @@ class RoundContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _overlay();
+    return Scaffold(body: _overlay());
   }
 
   Widget _overlay() {

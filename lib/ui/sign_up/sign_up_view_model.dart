@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/repo/auth_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
-import 'package:travel_app/utils/dependency_factory.dart';
+import 'package:travel_app/utils/dependencies_factory.dart';
 import 'package:travel_app/utils/field_validator.dart';
 import 'package:travel_app/utils/ui_model.dart';
 
@@ -20,8 +20,8 @@ class SignUpViewModel {
     this.input, {
     AuthRepo authRepo,
     AppTextValidator validator,
-  })  : _authRepo = authRepo ?? DependencyFactory.authRepo(),
-        _validator = validator ?? DependencyFactory.appTextValidator() {
+  })  : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
+        _validator = validator ?? DependenciesFactory.appTextValidator() {
     Stream<UIModel<bool>> _signUpResult = input.signUp.flatMap((value) {
       if (_list.isNotEmpty) {
         try {

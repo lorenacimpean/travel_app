@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/repo/auth_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
-import 'package:travel_app/utils/dependency_factory.dart';
+import 'package:travel_app/utils/dependencies_factory.dart';
 import 'package:travel_app/utils/field_validator.dart';
 import 'package:travel_app/utils/ui_model.dart';
 
@@ -20,24 +20,19 @@ class LoginViewModel {
     this.input, {
     AuthRepo authRepo,
     AppTextValidator validator,
-  })  : _authRepo = authRepo ?? DependencyFactory.authRepo(),
-        _validator = validator ?? DependencyFactory.appTextValidator() {
+  })  : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
+        _validator = validator ?? DependenciesFactory.appTextValidator() {
     Stream<UIModel<bool>> _loginResult = input.signIn.flatMap((value) {
       if (_list.isNotEmpty) {
-        try {
-          return _authRepo
-              .login(
-                  email: _list?.first?.textValue,
-                  password: _list?.last?.textValue)
-              .asBroadcastStream()
-              .map((result) {
-            debugPrint("Successfully logged in");
-            return UIModel.success(true);
-          });
-        } catch (e) {
-          debugPrint("Login error: ${e.toString()}");
-          return Stream.value(UIModel.error(e));
-        }
+        return _authRepo
+            .login(
+                email: _list?.first?.textValue,
+                password: _list?.last?.textValue)
+            .asBroadcastStream()
+            .map((result) {
+          debugPrint("Successfully logged in");
+          return UIModel.success(true);
+        }).onErrorReturnWith((error) => UIModel.error(error));
       }
       return Stream.empty();
     });
