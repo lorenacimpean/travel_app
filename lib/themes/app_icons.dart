@@ -18,4 +18,6 @@ class AppIcons {
       const AssetImage('assets/images/search_icon.png');
   static const AssetImage user_icon =
       const AssetImage('assets/images/user_icon.png');
+  static const AssetImage back_icon =
+      const AssetImage('assets/images/back_icon.png');
 }

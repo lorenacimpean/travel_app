@@ -5,18 +5,15 @@ import 'package:travel_app/ui/intro_screen/intro_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp().then(
-    (_) => runApp(
-      MyApp(),
-    ),
-  );
+  await Firebase.initializeApp();
+  runApp(TravelApp());
 }
 
-class MyApp extends StatelessWidget {
+class TravelApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Travel app',
       theme: AppTheme().appTheme(context),
       home: IntroScreen(),
     );

@@ -32,4 +32,9 @@ class AppStrings {
       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ";
 
 // "Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f";
+
+  //Route details screen
+  static const String description = "Description";
+  static const String startPoint = "Start Point";
+  static const String stops = "Stops";
 }
