@@ -9,16 +9,23 @@ import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
+import 'package:travel_app/ui/widgets/pink_button.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
 
 class RouteDetailsWidget extends StatelessWidget {
   final RouteModel model;
   final List<PointModel> points;
   final VoidCallback onBackTapped;
+  final VoidCallback onOpenMapsTapped;
   static final double _iconSize = 150;
   static final double _listViewSize = 200;
 
-  RouteDetailsWidget({Key key, this.model, this.onBackTapped, this.points})
+  RouteDetailsWidget(
+      {Key key,
+      this.model,
+      this.onBackTapped,
+      this.points,
+      this.onOpenMapsTapped})
       : super(key: key);
 
   @override
@@ -136,7 +143,12 @@ class RouteDetailsWidget extends StatelessWidget {
               style: AppTextStyle.headline2.copyWith(),
             ),
           ),
-          _pointsGallery()
+          _pointsGallery(),
+          Center(
+              child: PinkButton(
+            text: AppStrings.openMaps,
+            onTap: () => onOpenMapsTapped,
+          )),
         ],
       ),
     );
