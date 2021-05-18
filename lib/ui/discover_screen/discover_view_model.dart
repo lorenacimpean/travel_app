@@ -17,18 +17,22 @@ class DiscoverViewModel {
         })
         .startWith(UIModel.loading())
         .onErrorReturnWith((error) => UIModel.error(error));
-    output = Output(_routes);
+
+    Stream<RouteModel> _goToNext = input.onRouteTapped;
+    output = Output(_routes, _goToNext);
   }
 }
 
 class Input {
   final Subject<bool> onStart;
+  final Subject<RouteModel> onRouteTapped;
 
-  Input(this.onStart);
+  Input(this.onStart, this.onRouteTapped);
 }
 
 class Output {
   final Stream<UIModel<List<RouteModel>>> loadRoutes;
+  final Stream<RouteModel> goToNext;
 
-  Output(this.loadRoutes);
+  Output(this.loadRoutes, this.goToNext);
 }

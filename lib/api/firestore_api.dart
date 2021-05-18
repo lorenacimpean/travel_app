@@ -9,13 +9,15 @@ class FirestoreApi {
   FirestoreApi({FirebaseFirestore firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Stream<PointModel> getPoints(String pointId) {
+  Stream<PointModel> getPoint(String pointId) {
     return _firestore
         .collection(ApiKey.points)
         .doc(pointId)
         .get()
         .asStream()
-        .map((snapshot) => PointModel.fromJson(snapshot.data()));
+        .map((snapshot) {
+      return PointModel.fromJson(snapshot.data());
+    });
   }
 
   Stream<RouteModel> getRoute(String routeId) {
@@ -28,7 +30,10 @@ class FirestoreApi {
   }
 
   Stream<List<RouteModel>> getRoutes() {
-    return _firestore.collection(ApiKey.routes).snapshots().map((snap) =>
-        snap.docs.map((doc) => RouteModel.fromJson(doc.data())).toList());
+    return _firestore.collection(ApiKey.routes).snapshots().map((snap) {
+      return snap.docs.map((doc) {
+        return RouteModel.fromJson(doc.data());
+      }).toList();
+    });
   }
 }
