@@ -10,17 +10,19 @@ class RouteRepo {
       : _api = api ?? DependenciesFactory.fireStoreApi();
 
   Stream<PointModel> getPoint(String pointId) {
-    return _api.getPoint(pointId);
+    return _api.getPoint(pointId).map((json) => PointModel.fromJson(json));
   }
 
   Stream<List<PointModel>> getPoints(List<dynamic> pointIds) {
     List<String> stringList = pointIds.map((e) => e.toString()).toList();
-    return _api.getPoints(stringList).map((points) {
-      return points.map((pointJson) => PointModel.fromJson(pointJson)).toList();
-    });
+    return _api.getPoints(stringList).map((points) =>
+        points.map((pointJson) => PointModel.fromJson(pointJson)).toList());
   }
 
-  Stream<RouteModel> getRoute(String routeId) => _api.getRoute(routeId);
+  Stream<RouteModel> getRoute(String routeId) {
+    return _api.getRoute(routeId).map((json) => RouteModel.fromJson(json));
+  }
 
-  Stream<List<RouteModel>> get routes => _api.getRoutes();
+  Stream<List<RouteModel>> get routes => _api.getRoutes().map(
+      (routes) => routes.map((json) => RouteModel.fromJson(json)).toList());
 }
