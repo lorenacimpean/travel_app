@@ -7,10 +7,10 @@ class WidgetUtils {
 
   static void launchMapsWithWayPoints(List<LocationModel> locations) async {
     String link = googleMapsDeeplink;
+    //TODO: add current location as starting point
     link += "&origin=${locations.first.string}";
     link += "&destination=${locations.last.string}";
     String waypoints = "&waypoints=";
-
     for (int i = 1; i < locations.length - 1; i++) {
       waypoints += locations[i].string;
     }

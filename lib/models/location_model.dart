@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travel_app/api/api_keys.dart';
 
 class LocationModel {
@@ -15,6 +16,11 @@ class LocationModel {
       latitude: json[ApiKey.latitude],
       longitude: json[ApiKey.longitude],
     );
+  }
+
+  factory LocationModel.fromGeopoint(GeoPoint geoPoint) {
+    return LocationModel(
+        latitude: geoPoint.latitude, longitude: geoPoint.longitude);
   }
 
   Map<String, dynamic> toJson() {

@@ -49,7 +49,7 @@ class IntroScreen extends StatelessWidget {
                     padding: EdgeInsets.all(AppDimen.smallPadding),
                     child: BlurredButton(
                       text: "Login with email",
-                      onTap: () => Navigator.push(
+                      onTap: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
                       ),

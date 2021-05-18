@@ -48,7 +48,7 @@ class RouteDetailsWidget extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.topLeft,
                     child: GestureDetector(
-                      onTap: () => onBackTapped,
+                      onTap: onBackTapped,
                       child: Image(
                         fit: BoxFit.contain,
                         image: AppIcons.back_icon,
@@ -147,7 +147,7 @@ class RouteDetailsWidget extends StatelessWidget {
           Center(
               child: PinkButton(
             text: AppStrings.openMaps,
-            onTap: () => onOpenMapsTapped,
+            onTap: onOpenMapsTapped,
           )),
         ],
       ),

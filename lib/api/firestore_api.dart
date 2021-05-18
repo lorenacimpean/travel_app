@@ -9,15 +9,21 @@ class FirestoreApi {
   FirestoreApi({FirebaseFirestore firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
+  Stream<List<Map<String, dynamic>>> getPoints(List<String> pointIds) {
+    return _firestore
+        .collection(ApiKey.points)
+        .where(FieldPath.documentId, whereIn: pointIds)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+  }
+
   Stream<PointModel> getPoint(String pointId) {
     return _firestore
         .collection(ApiKey.points)
         .doc(pointId)
         .get()
         .asStream()
-        .map((snapshot) {
-      return PointModel.fromJson(snapshot.data());
-    });
+        .map((snapshot) => PointModel.fromJson(snapshot.data()));
   }
 
   Stream<RouteModel> getRoute(String routeId) {

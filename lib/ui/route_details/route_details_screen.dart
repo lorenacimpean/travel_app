@@ -46,10 +46,11 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return RouteDetailsWidget(
-      points: widget.points,
-      route: widget.routeModel,
-      onBackTapped: () => _vm.input.onBackTapped.add(true),
-      onOpenMapsTapped: () => _vm.input.onMapOpened.add(widget.points),
-    );
+        points: widget.points,
+        route: widget.routeModel,
+        onBackTapped: () => _vm.input.onBackTapped.add(true),
+        onOpenMapsTapped: () {
+          _vm.input.onMapOpened.add(widget.points);
+        });
   }
 }
