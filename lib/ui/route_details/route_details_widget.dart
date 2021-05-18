@@ -8,6 +8,7 @@ import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
+import 'package:travel_app/ui/widgets/back_button_widget.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/ui/widgets/pink_button.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
@@ -16,7 +17,7 @@ class RouteDetailsWidget extends StatelessWidget {
   final RouteModel route;
   final List<PointModel> points;
   final VoidCallback onBackTapped;
-  final VoidCallback onOpenMapsTapped;
+  final ValueChanged<List<PointModel>> onOpenMapsTapped;
 
   static final double _listViewSize = 200;
 
@@ -47,26 +48,13 @@ class RouteDetailsWidget extends StatelessWidget {
                 ),
                 child: Align(
                     alignment: Alignment.topLeft,
-                    child: GestureDetector(
-                      onTap: onBackTapped,
-                      child: Container(
-                        height: AppDimen.mediumIconSize,
-                        width: AppDimen.mediumIconSize,
-                        child: Padding(
-                          padding: EdgeInsets.all(AppDimen.smallPadding),
-                          child: Image(
-                            fit: BoxFit.contain,
-                            image: AppIcons.back_icon,
-                          ),
-                        ),
-                      ),
-                    )),
+                    child: BackButtonWidget(onBackTapped: onBackTapped)),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: AppDimen.xxxlPadding),
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: BlurredButton(text: "TEST"),
+                  child: BlurredButton(text: route?.name ?? ""),
                 ),
               ),
               Padding(
@@ -153,7 +141,7 @@ class RouteDetailsWidget extends StatelessWidget {
           Center(
               child: PinkButton(
             text: AppStrings.openMaps,
-            onTap: onOpenMapsTapped,
+            onTap: () => onOpenMapsTapped(points),
           )),
         ],
       ),
@@ -166,9 +154,7 @@ class RouteDetailsWidget extends StatelessWidget {
       height: _listViewSize,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount:
-            // points.length
-            5,
+        itemCount: points.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: EdgeInsets.all(AppDimen.smallPadding),
@@ -178,8 +164,7 @@ class RouteDetailsWidget extends StatelessWidget {
                   AppDimen.defaultCornerRadius,
                 ),
               ),
-              child: Image.network(
-                  // points[index]?.imageUrl ??
+              child: Image.network(points[index]?.imageUrl ??
                   "https://dummyimage.com/600x400/000/fff"),
             ),
           );

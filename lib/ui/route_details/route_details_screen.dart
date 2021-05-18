@@ -49,8 +49,8 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
         points: widget.points,
         route: widget.routeModel,
         onBackTapped: () => _vm.input.onBackTapped.add(true),
-        onOpenMapsTapped: () {
-          _vm.input.onMapOpened.add(widget.points);
+        onOpenMapsTapped: (points) {
+          _vm.input.onMapOpened.add(points);
         });
   }
 }
