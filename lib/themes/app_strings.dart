@@ -37,4 +37,5 @@ class AppStrings {
   static const String description = "Description";
   static const String startPoint = "Start Point";
   static const String stops = "Stops";
+  static const String openMaps = "Open Maps";
 }

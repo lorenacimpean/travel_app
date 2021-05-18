@@ -21,7 +21,7 @@ class PointModel {
       name: json[ApiKey.name],
       description: json[ApiKey.description],
       duration: json[ApiKey.duration],
-      location: LocationModel.fromJson(json[ApiKey.location]),
+      location: LocationModel.fromGeopoint(json[ApiKey.location]),
       imageUrl: json[ApiKey.imageUrl],
     );
   }

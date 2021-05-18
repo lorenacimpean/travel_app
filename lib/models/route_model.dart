@@ -19,6 +19,6 @@ class RouteModel {
         name: json[ApiKey.name],
         description: json[ApiKey.description],
         duration: json[ApiKey.duration],
-        pointIds: json[ApiKey.points]);
+        pointIds: json[ApiKey.points] );
   }
 }

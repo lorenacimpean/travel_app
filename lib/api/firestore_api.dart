@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travel_app/api/api_keys.dart';
-import 'package:travel_app/models/point_model.dart';
-import 'package:travel_app/models/route_model.dart';
 
 class FirestoreApi {
   final FirebaseFirestore _firestore;
@@ -9,31 +7,35 @@ class FirestoreApi {
   FirestoreApi({FirebaseFirestore firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  Stream<PointModel> getPoint(String pointId) {
+  Stream<List<Map<String, dynamic>>> getPoints(List<String> pointIds) {
+    return _firestore
+        .collection(ApiKey.points)
+        .where(FieldPath.documentId, whereIn: pointIds)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) => doc.data()).toList());
+  }
+
+  Stream<Map<String, dynamic>> getPoint(String pointId) {
     return _firestore
         .collection(ApiKey.points)
         .doc(pointId)
         .get()
         .asStream()
-        .map((snapshot) {
-      return PointModel.fromJson(snapshot.data());
-    });
+        .map((snapshot) => snapshot.data());
   }
 
-  Stream<RouteModel> getRoute(String routeId) {
+  Stream<Map<String, dynamic>> getRoute(String routeId) {
     return _firestore
         .collection(ApiKey.routes)
         .doc(routeId)
         .get()
         .asStream()
-        .map((snapshot) => RouteModel.fromJson(snapshot.data()));
+        .map((snapshot) => snapshot.data());
   }
 
-  Stream<List<RouteModel>> getRoutes() {
+  Stream<List<Map<String, dynamic>>> getRoutes() {
     return _firestore.collection(ApiKey.routes).snapshots().map((snap) {
-      return snap.docs.map((doc) {
-        return RouteModel.fromJson(doc.data());
-      }).toList();
+      return snap.docs.map((doc) => doc.data()).toList();
     });
   }
 }
