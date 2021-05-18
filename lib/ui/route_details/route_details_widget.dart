@@ -17,7 +17,7 @@ class RouteDetailsWidget extends StatelessWidget {
   final List<PointModel> points;
   final VoidCallback onBackTapped;
   final VoidCallback onOpenMapsTapped;
-  static final double _iconSize = 150;
+
   static final double _listViewSize = 200;
 
   RouteDetailsWidget(
@@ -49,9 +49,16 @@ class RouteDetailsWidget extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: GestureDetector(
                       onTap: onBackTapped,
-                      child: Image(
-                        fit: BoxFit.contain,
-                        image: AppIcons.back_icon,
+                      child: Container(
+                        height: AppDimen.mediumIconSize,
+                        width: AppDimen.mediumIconSize,
+                        child: Padding(
+                          padding: EdgeInsets.all(AppDimen.smallPadding),
+                          child: Image(
+                            fit: BoxFit.contain,
+                            image: AppIcons.back_icon,
+                          ),
+                        ),
                       ),
                     )),
               ),
@@ -68,7 +75,6 @@ class RouteDetailsWidget extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Image(
-                    height: _iconSize,
                     fit: BoxFit.contain,
                     image: AppIcons.play_icon,
                     // fit: BoxFit.fitHeight,
