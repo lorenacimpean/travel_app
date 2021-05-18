@@ -23,4 +23,8 @@ class LocationModel {
       ApiKey.longitude: longitude,
     };
   }
+
+  String get string {
+    return "$latitude,$longitude";
+  }
 }

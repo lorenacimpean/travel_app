@@ -13,7 +13,7 @@ import 'package:travel_app/ui/widgets/pink_button.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
 
 class RouteDetailsWidget extends StatelessWidget {
-  final RouteModel model;
+  final RouteModel route;
   final List<PointModel> points;
   final VoidCallback onBackTapped;
   final VoidCallback onOpenMapsTapped;
@@ -22,7 +22,7 @@ class RouteDetailsWidget extends StatelessWidget {
 
   RouteDetailsWidget(
       {Key key,
-      this.model,
+      this.route,
       this.onBackTapped,
       this.points,
       this.onOpenMapsTapped})

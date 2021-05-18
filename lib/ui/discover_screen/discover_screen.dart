@@ -56,7 +56,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen> {
     disposeLater(_vm.output.goToNext.listen((route) {
       setState(() {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => RouteDetails(
+            builder: (context) => RouteDetailsScreen(
                   routeModel: route,
                 )));
       });
