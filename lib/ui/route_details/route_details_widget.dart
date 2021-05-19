@@ -18,16 +18,18 @@ class RouteDetailsWidget extends StatelessWidget {
   final List<PointModel> points;
   final VoidCallback onBackTapped;
   final ValueChanged<List<PointModel>> onOpenMapsTapped;
+  final Function(PointModel) onPointTapped;
 
   static final double _listViewSize = 200;
 
-  RouteDetailsWidget(
-      {Key key,
-      this.route,
-      this.onBackTapped,
-      this.points,
-      this.onOpenMapsTapped})
-      : super(key: key);
+  RouteDetailsWidget({
+    Key key,
+    this.route,
+    this.onBackTapped,
+    this.points,
+    this.onOpenMapsTapped,
+    this.onPointTapped,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +84,7 @@ class RouteDetailsWidget extends StatelessWidget {
                       ),
                       child: _screenDetails()),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -156,16 +158,19 @@ class RouteDetailsWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: points.length,
         itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: EdgeInsets.all(AppDimen.smallPadding),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  AppDimen.defaultCornerRadius,
+          return GestureDetector(
+            onTap: () => onPointTapped(points[index]),
+            child: Padding(
+              padding: EdgeInsets.all(AppDimen.smallPadding),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    AppDimen.defaultCornerRadius,
+                  ),
                 ),
+                child: Image.network(points[index]?.imageUrl ??
+                    "https://dummyimage.com/600x400/000/fff"),
               ),
-              child: Image.network(points[index]?.imageUrl ??
-                  "https://dummyimage.com/600x400/000/fff"),
             ),
           );
         },
