@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/models/point_model.dart';
 import 'package:travel_app/models/route_model.dart';
+import 'package:travel_app/ui/poi_info/poi_info_screen.dart';
 import 'package:travel_app/ui/route_details/route_details_view_model.dart';
 import 'package:travel_app/ui/route_details/route_details_widget.dart';
 import 'package:travel_app/utils/base_state.dart';
@@ -30,6 +32,7 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
     _vm = RouteDetailsViewModel(Input(
       PublishSubject(),
       PublishSubject(),
+      PublishSubject(),
     ));
     _bindViewModel();
   }
@@ -41,16 +44,28 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
     disposeLater(_vm.output.openMaps.listen((locations) {
       WidgetUtils.launchMapsWithWayPoints(locations);
     }));
+    disposeLater(_vm.output.openPoiInfo.listen((point) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PoiInfoScreen(
+                    point: point,
+                  )));
+    }));
   }
 
   @override
   Widget build(BuildContext context) {
     return RouteDetailsWidget(
-        points: widget.points,
-        route: widget.routeModel,
-        onBackTapped: () => _vm.input.onBackTapped.add(true),
-        onOpenMapsTapped: (points) {
-          _vm.input.onMapOpened.add(points);
-        });
+      points: widget.points,
+      route: widget.routeModel,
+      onBackTapped: () => _vm.input.onBackTapped.add(true),
+      onOpenMapsTapped: (points) {
+        _vm.input.onMapOpened.add(points);
+      },
+      onPointTapped: (point) {
+        _vm.input.onPointTapped.add(point);
+      },
+    );
   }
 }

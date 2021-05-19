@@ -25,17 +25,20 @@ class AppStrings {
   static const String photoListError = "Photo list is not available";
   static const String generalError = "Something went wrong!";
 
-  //Discover screen
+  // Discover screen
   static const String discover = "Discover";
 
   static const String dummyText =
       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ";
 
-// "Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f";
+  //"Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f";
 
-  //Route details screen
+  // Route details screen
   static const String description = "Description";
   static const String startPoint = "Start Point";
   static const String stops = "Stops";
   static const String openMaps = "Open Maps";
+
+  // Poi info screen
+  static const String address = "Description";
 }
