@@ -7,6 +7,7 @@ import 'package:travel_app/ui/login_screen/login_view_model.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/form_screen.dart';
+import 'package:travel_app/ui/widgets/loading_widget.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/ui_model.dart';
 
@@ -18,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends BaseState<LoginScreen> {
   LoginViewModel _vm;
   List<AppInputFieldModel> _formModels = [];
+  bool _showLoading = false;
 
   @override
   void initState() {
@@ -45,12 +47,14 @@ class _LoginScreenState extends BaseState<LoginScreen> {
       setState(() {
         switch (response.state) {
           case OperationState.loading:
-            // TODO: Handle this case.
+            _showLoading = true;
             break;
           case OperationState.error:
+            _showLoading = false;
             displayErrorModal(context, response.error.toString());
             break;
           case OperationState.ok:
+            _showLoading = false;
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => DiscoverScreen()));
             break;
@@ -75,11 +79,13 @@ class _LoginScreenState extends BaseState<LoginScreen> {
   Widget build(BuildContext context) {
     return AppScreen(
       title: AppStrings.login,
-      body: FormContainer(
-        formFields: _formFields(),
-        buttonText: "Sign in",
-        onTap: () => _vm.input.signIn.add(true),
-      ),
+      body: _showLoading
+          ? LoadingWidget()
+          : FormContainer(
+              formFields: _formFields(),
+              buttonText: "Sign in",
+              onTap: () => _vm.input.signIn.add(true),
+            ),
     );
   }
 }

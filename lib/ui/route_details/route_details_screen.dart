@@ -6,6 +6,7 @@ import 'package:travel_app/models/route_model.dart';
 import 'package:travel_app/ui/poi_info/poi_info_screen.dart';
 import 'package:travel_app/ui/route_details/route_details_view_model.dart';
 import 'package:travel_app/ui/route_details/route_details_widget.dart';
+import 'package:travel_app/ui/widgets/loading_widget.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/ui_model.dart';
 import 'package:travel_app/utils/widget_utils.dart';
@@ -26,6 +27,7 @@ class RouteDetailsScreen extends StatefulWidget {
 
 class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
   RouteDetailsViewModel _vm;
+  bool _showLoading = false;
 
   @override
   void initState() {
@@ -46,12 +48,14 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
       setState(() {
         switch (response.state) {
           case OperationState.loading:
-            // TODO: show Loading
+            _showLoading = true;
             break;
           case OperationState.error:
+            _showLoading = false;
             displayErrorModal(context, response.error.toString());
             break;
           case OperationState.ok:
+            _showLoading = false;
             WidgetUtils.launchMapsWithWayPoints(response.data);
             break;
         }
@@ -69,16 +73,18 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return RouteDetailsWidget(
-      points: widget.points,
-      route: widget.routeModel,
-      onBackTapped: () => _vm.input.onBackTapped.add(true),
-      onOpenMapsTapped: (points) {
-        _vm.input.onMapOpened.add(points);
-      },
-      onPointTapped: (point) {
-        _vm.input.onPointTapped.add(point);
-      },
-    );
+    return _showLoading
+        ? LoadingWidget()
+        : RouteDetailsWidget(
+            points: widget.points,
+            route: widget.routeModel,
+            onBackTapped: () => _vm.input.onBackTapped.add(true),
+            onOpenMapsTapped: (points) {
+              _vm.input.onMapOpened.add(points);
+            },
+            onPointTapped: (point) {
+              _vm.input.onPointTapped.add(point);
+            },
+          );
   }
 }
