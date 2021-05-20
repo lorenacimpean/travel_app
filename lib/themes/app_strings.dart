@@ -40,15 +40,19 @@ class AppStrings {
   static const String openMaps = "Open Maps";
 
   // Poi info screen
-  static const String address = "Description";
+  static const String address = "Address";
 
-  //Permissions
+  // Permissions
   static const String openSettings = "Open Settings";
   static const String requestPermissionTitle = "We need your permission";
   static const String requestPermissionText =
       "In order to guide you we need to access the devices's location";
 
-  //Dialog actions
+  // Dialog actions
   static const String ok = "Ok";
 
+  // Navigation menu
+  static const String profile = "Profile";
+  static const String privacyPolicy = "Privacy Policy";
+  static const String contactSupport = "Contact Support";
 }
