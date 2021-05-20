@@ -15,17 +15,15 @@ class RouteDetailsViewModel {
   }) : _locationRepo = locationRepo ?? DependenciesFactory.locationRepo() {
     Stream<bool> _goBack = input.onBackTapped;
 
-    Stream<List<LocationModel>> _openMaps = input.onMapOpened.map((points) {
+    Stream<List<LocationModel>> _openMaps = input.onMapOpened.flatMap((points) {
       List<LocationModel> locations = [];
-      _locationRepo.checkPermission().flatMap((_) {
-        return _locationRepo.getLocation().map((location) {
-          locations.add(location);
+      return _locationRepo.getLocation().map((location) {
+        locations.add(location);
+        points.forEach((point) {
+          locations.add(point.location);
         });
+        return locations;
       });
-      points.forEach((point) {
-        locations.add(point.location);
-      });
-      return locations;
     });
 
     Stream<PointModel> _openPoiInfo = input.onPointTapped.flatMap((point) {
@@ -37,7 +35,11 @@ class RouteDetailsViewModel {
       });
     });
 
-    output = Output(_goBack, _openMaps, _openPoiInfo);
+    output = Output(
+      _goBack,
+      _openMaps,
+      _openPoiInfo,
+    );
   }
 }
 
@@ -58,5 +60,9 @@ class Output {
   final Stream<List<LocationModel>> openMaps;
   final Stream<PointModel> openPoiInfo;
 
-  Output(this.goBack, this.openMaps, this.openPoiInfo);
+  Output(
+    this.goBack,
+    this.openMaps,
+    this.openPoiInfo,
+  );
 }

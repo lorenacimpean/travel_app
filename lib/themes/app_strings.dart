@@ -41,4 +41,10 @@ class AppStrings {
 
   // Poi info screen
   static const String address = "Description";
+
+
+  //Permissions
+  static const String openSettings = "Open Settings";
+  static const String requestPermissionTitle = "We need your permission";
+  static const String requestPermissionText = "In order to guide you we need to access the devices's location";
 }

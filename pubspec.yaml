@@ -20,6 +20,7 @@ dependencies:
   url_launcher: ^6.0.3
   geocoding: ^2.0.0
   location: ^4.1.1
+  permission_handler: ^7.1.0
 
 dev_dependencies:
   pedantic: ^1.9.2

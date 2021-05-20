@@ -8,14 +8,6 @@ class LocationRepo {
   LocationRepo({loc.Location location})
       : _location = location ?? loc.Location();
 
-  Stream<loc.PermissionStatus> checkPermission() =>
-      _location.hasPermission().asStream().map((result) {
-        if (result != loc.PermissionStatus.granted) {
-          _location.requestPermission();
-        }
-        return result;
-      });
-
   Stream<LocationModel> getLocation() => _location.getLocation().asStream().map(
         (data) => LocationModel(
           latitude: data.latitude,
