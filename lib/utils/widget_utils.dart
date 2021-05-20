@@ -7,7 +7,7 @@ class WidgetUtils {
 
   static void launchMapsWithWayPoints(List<LocationModel> locations) async {
     String link = googleMapsDeeplink;
-    //TODO: add current location as starting point
+    //current location is always starting point
     link += "&origin=${locations.first.string}";
     link += "&destination=${locations.last.string}";
     String waypoints = "&waypoints=";
@@ -15,6 +15,18 @@ class WidgetUtils {
       waypoints += locations[i].string;
     }
     link += waypoints;
+    if (await canLaunch(link)) {
+      await launch(link);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+
+  static void launchMapsBetweenPoints(
+      LocationModel start, LocationModel end) async {
+    String link = googleMapsDeeplink;
+    link += "&origin=${start.string}";
+    link += "&destination=${end.string}";
     if (await canLaunch(link)) {
       await launch(link);
     } else {

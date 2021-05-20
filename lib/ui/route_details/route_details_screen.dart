@@ -7,6 +7,7 @@ import 'package:travel_app/ui/poi_info/poi_info_screen.dart';
 import 'package:travel_app/ui/route_details/route_details_view_model.dart';
 import 'package:travel_app/ui/route_details/route_details_widget.dart';
 import 'package:travel_app/utils/base_state.dart';
+import 'package:travel_app/utils/ui_model.dart';
 import 'package:travel_app/utils/widget_utils.dart';
 
 class RouteDetailsScreen extends StatefulWidget {
@@ -41,8 +42,20 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
     disposeLater(_vm.output.goBack.listen((_) {
       Navigator.of(context).pop();
     }));
-    disposeLater(_vm.output.openMaps.listen((locations) {
-      WidgetUtils.launchMapsWithWayPoints(locations);
+    disposeLater(_vm.output.openMaps.listen((response) {
+      setState(() {
+        switch (response.state) {
+          case OperationState.loading:
+            // TODO: show Loading
+            break;
+          case OperationState.error:
+            displayErrorModal(context, response.error.toString());
+            break;
+          case OperationState.ok:
+            WidgetUtils.launchMapsWithWayPoints(response.data);
+            break;
+        }
+      });
     }));
     disposeLater(_vm.output.openPoiInfo.listen((point) {
       Navigator.push(
