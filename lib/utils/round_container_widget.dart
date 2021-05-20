@@ -67,7 +67,7 @@ class ColorClipper extends CustomClipper<Rect> {
   );
 
   factory ColorClipper.navigation() {
-    return ColorClipper(10, 0, 1.2, 2);
+    return ColorClipper(0, 50, 0.8, 1.6);
   }
 
   factory ColorClipper.color() {
