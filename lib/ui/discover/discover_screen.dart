@@ -6,13 +6,14 @@ import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
-import 'package:travel_app/ui/discover_screen/discover_view_model.dart';
 import 'package:travel_app/ui/route_details/route_details_screen.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/permission_handler.dart';
 import 'package:travel_app/utils/ui_model.dart';
+
+import 'discover_view_model.dart';
 
 class DiscoverScreen extends StatefulWidget {
   @override

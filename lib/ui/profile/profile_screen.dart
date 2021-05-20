@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/themes/app_strings.dart';
-import 'package:travel_app/ui/discover/discover_screen.dart';
-import 'package:travel_app/ui/sign_up/sign_up_view_model.dart';
+import 'package:travel_app/ui/profile/profile_view_model.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/form_screen.dart';
@@ -11,20 +10,20 @@ import 'package:travel_app/ui/widgets/loading_widget.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/ui_model.dart';
 
-class SignUpScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  ProfileScreenState createState() => ProfileScreenState();
 }
 
-class _SignUpScreenState extends BaseState<SignUpScreen> {
-  SignUpViewModel _vm;
+class ProfileScreenState extends BaseState<ProfileScreen> {
   List<AppInputFieldModel> _formModels = [];
   bool _showLoading = false;
+  ProfileViewModel _vm;
 
   @override
   void initState() {
     super.initState();
-    _vm = SignUpViewModel(Input(
+    _vm = ProfileViewModel(Input(
       PublishSubject(),
       PublishSubject(),
       PublishSubject(),
@@ -42,7 +41,7 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
         _formModels = response;
       });
     }));
-    disposeLater(_vm.output.onSignUpResult.listen((response) {
+    disposeLater(_vm.output.onEditResult.listen((response) {
       setState(() {
         switch (response.state) {
           case OperationState.loading:
@@ -54,8 +53,7 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
             break;
           case OperationState.ok:
             _showLoading = false;
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => DiscoverScreen()));
+            Navigator.of(context).pop();
             break;
         }
       });
@@ -77,13 +75,13 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScreen(
-      title: AppStrings.signUp,
+      title: AppStrings.profile,
       body: _showLoading
           ? LoadingWidget()
           : FormContainer(
               formFields: _formFields(),
-              buttonText: AppStrings.signUp,
-              onTap: () => _vm.input.signUp.add(true),
+              buttonText: AppStrings.confirm,
+              onTap: () => _vm.input.onConfirm.add(true),
             ),
     );
   }
