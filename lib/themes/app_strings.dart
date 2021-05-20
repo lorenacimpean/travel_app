@@ -8,7 +8,10 @@ class AppStrings {
   static const String emailAddress = "Email";
   static const String password = "Password";
   static const String confirmPassword = "Confirm password";
+  static const String name = "Name";
   static const String login = "Login";
+  static const String signUp = "Create account";
+  static const String confirm = "Confirm";
 
   //errors
   static const invalidCredentials = "Invalid credentials";
@@ -55,4 +58,7 @@ class AppStrings {
   static const String profile = "Profile";
   static const String privacyPolicy = "Privacy Policy";
   static const String contactSupport = "Contact Support";
+
+
+
 }

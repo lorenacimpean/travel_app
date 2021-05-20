@@ -5,7 +5,7 @@ import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 
-enum FieldType { emailAddress, password, confirmPassword }
+enum FieldType { emailAddress, password, confirmPassword, name }
 
 typedef OnAppInputFieldChange(AppInputFieldModel model);
 
@@ -121,6 +121,9 @@ class AppInputFieldModel {
       case FieldType.confirmPassword:
         return AppStrings.confirmPassword;
         break;
+      case FieldType.name:
+        return AppStrings.name;
+        break;
 
       default:
         return null;
@@ -135,6 +138,9 @@ class AppInputFieldModel {
       case FieldType.password:
       case FieldType.confirmPassword:
         return TextInputType.visiblePassword;
+        break;
+      case FieldType.name:
+        return TextInputType.name;
         break;
       default:
         return null;
