@@ -8,6 +8,7 @@ import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/poi_info/poi_info_view_model.dart';
 import 'package:travel_app/ui/widgets/back_button_widget.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
+import 'package:travel_app/ui/widgets/loading_widget.dart';
 import 'package:travel_app/ui/widgets/pink_button.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
@@ -28,6 +29,7 @@ class PoiInfoScreen extends StatefulWidget {
 
 class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
   PoiInfoViewModel _vm;
+  bool _showLoading = false;
 
   @override
   void initState() {
@@ -41,12 +43,14 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
       setState(() {
         switch (response.state) {
           case OperationState.loading:
-            // TODO: Handle this case.
+            _showLoading = true;
             break;
           case OperationState.error:
+            _showLoading = false;
             displayErrorModal(context, response.error);
             break;
           case OperationState.ok:
+            _showLoading = false;
             WidgetUtils.launchMapsBetweenPoints(
                 response.data.first, response.data.last);
             break;
@@ -59,35 +63,38 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: Stack(
-            children: [
-              RoundContainerWidget(
-                widgetType: WidgetType.photoOverlay,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: AppDimen.xlPadding,
-                  horizontal: AppDimen.largePadding,
+        body: _showLoading
+            ? LoadingWidget()
+            : Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Stack(
+                  children: [
+                    RoundContainerWidget(
+                      widgetType: WidgetType.photoOverlay,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: AppDimen.xlPadding,
+                        horizontal: AppDimen.largePadding,
+                      ),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: BackButtonWidget(
+                              onBackTapped: () => Navigator.of(context).pop())),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: AppDimen.xxxlPadding),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: BlurredButton(text: widget.point?.name ?? ""),
+                      ),
+                    ),
+                    _screenContent(),
+                  ],
                 ),
-                child: Align(
-                    alignment: Alignment.topLeft,
-                    child: BackButtonWidget(
-                        onBackTapped: () => Navigator.of(context).pop())),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: AppDimen.xxxlPadding),
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: BlurredButton(text: widget.point?.name ?? ""),
-                ),
-              ),
-              _screenContent(),
-            ],
-          ),
-        ),
       ),
     );
   }
