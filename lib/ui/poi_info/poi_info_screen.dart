@@ -11,6 +11,7 @@ import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/ui/widgets/pink_button.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
+import 'package:travel_app/utils/ui_model.dart';
 import 'package:travel_app/utils/widget_utils.dart';
 
 class PoiInfoScreen extends StatefulWidget {
@@ -36,8 +37,21 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
   }
 
   void _bindViewModel() {
-    disposeLater(_vm.output.openMaps.listen((locations) {
-      WidgetUtils.launchMapsWithWayPoints(locations);
+    disposeLater(_vm.output.openMaps.listen((response) {
+      setState(() {
+        switch (response.state) {
+          case OperationState.loading:
+            // TODO: Handle this case.
+            break;
+          case OperationState.error:
+            displayErrorModal(context, response.error);
+            break;
+          case OperationState.ok:
+            WidgetUtils.launchMapsBetweenPoints(
+                response.data.first, response.data.last);
+            break;
+        }
+      });
     }));
   }
 
@@ -127,7 +141,7 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
                   child: Text(
-                    "Point address from coordinates -> extension on point location",
+                    widget.point.address ?? "",
                     style: AppTextStyle.subtitle2.copyWith(
                       fontSize: AppDimen.subtitle1,
                     ),

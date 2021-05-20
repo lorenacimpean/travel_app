@@ -20,7 +20,9 @@ class LocationModel {
 
   factory LocationModel.fromGeopoint(GeoPoint geoPoint) {
     return LocationModel(
-        latitude: geoPoint.latitude, longitude: geoPoint.longitude);
+      latitude: geoPoint.latitude,
+      longitude: geoPoint.longitude,
+    );
   }
 
   Map<String, dynamic> toJson() {

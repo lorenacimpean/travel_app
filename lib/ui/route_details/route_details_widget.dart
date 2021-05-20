@@ -17,7 +17,7 @@ class RouteDetailsWidget extends StatelessWidget {
   final RouteModel route;
   final List<PointModel> points;
   final VoidCallback onBackTapped;
-  final ValueChanged<List<PointModel>> onOpenMapsTapped;
+  final Function(List<PointModel>) onOpenMapsTapped;
   final Function(PointModel) onPointTapped;
 
   static final double _listViewSize = 200;

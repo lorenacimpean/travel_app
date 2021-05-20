@@ -11,6 +11,7 @@ import 'package:travel_app/ui/route_details/route_details_screen.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/utils/base_state.dart';
+import 'package:travel_app/utils/permission_handler.dart';
 import 'package:travel_app/utils/ui_model.dart';
 
 class DiscoverScreen extends StatefulWidget {
@@ -18,7 +19,8 @@ class DiscoverScreen extends StatefulWidget {
   DiscoverScreenState createState() => DiscoverScreenState();
 }
 
-class DiscoverScreenState extends BaseState<DiscoverScreen> {
+class DiscoverScreenState extends BaseState<DiscoverScreen>
+    with PermissionHandler {
   static final double _cardSize = 150;
   DiscoverViewModel _vm;
   List<RouteModel> _routes;
@@ -32,10 +34,15 @@ class DiscoverScreenState extends BaseState<DiscoverScreen> {
       PublishSubject(),
     ));
     _bindViewModel();
-    _vm.input.onStart.add(true);
   }
 
   void _bindViewModel() {
+    disposeLater(handleLocationPermission(context).listen((hasPermission) {
+      if (hasPermission) {
+        _vm.input.onStart.add(true);
+      }
+    }));
+
     disposeLater(_vm.output.loadRoutes.listen((result) {
       setState(() {
         switch (result.state) {

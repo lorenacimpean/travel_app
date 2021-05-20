@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:travel_app/themes/app_colors.dart';
-import 'package:travel_app/ui/widgets/app_dialog.dart';
+import 'package:travel_app/themes/app_strings.dart';
+import 'package:travel_app/ui/widgets/app_modal_widget.dart';
+import 'package:travel_app/ui/widgets/pink_button.dart';
 
 abstract class BaseState<T extends StatefulWidget> extends State<T> {
   List<StreamSubscription> _subscriptions = [];
@@ -26,8 +28,16 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
         context: context,
         barrierColor: AppColors.white,
         builder: (context) {
-          return AppDialog(
-            text: error.toString(),
+          return AppModalWidget(
+            title: error.toString(),
+            actions: [
+              PinkButton(
+                text: AppStrings.ok,
+                onTap: () {
+                  Navigator.of(context).pop(true);
+                },
+              )
+            ],
           );
         });
   }
