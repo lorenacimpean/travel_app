@@ -127,7 +127,7 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
                   padding:
                       EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
                   child: Text(
-                    "Point address from coordinates -> extension on point location",
+                    widget.point.address ?? "",
                     style: AppTextStyle.subtitle2.copyWith(
                       fontSize: AppDimen.subtitle1,
                     ),

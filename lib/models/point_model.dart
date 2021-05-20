@@ -7,13 +7,15 @@ class PointModel {
   final String duration;
   final LocationModel location;
   final String imageUrl;
+  String address;
 
-  PointModel(
-      {this.name,
-      this.description,
-      this.duration,
-      this.location,
-      this.imageUrl});
+  PointModel({
+    this.name,
+    this.description,
+    this.duration,
+    this.location,
+    this.imageUrl,
+  });
 
   factory PointModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
