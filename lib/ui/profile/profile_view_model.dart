@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:travel_app/api/api_keys.dart';
+import 'package:travel_app/api/firestore_api.dart';
 import 'package:travel_app/repo/auth_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
@@ -10,27 +12,38 @@ import 'package:travel_app/utils/ui_model.dart';
 class ProfileViewModel {
   final Input input;
   final AuthRepo _authRepo;
+  final FirestoreApi _firestoreApi;
+
   Output output;
   List<AppInputFieldModel> _list = [];
   final AppTextValidator _validator;
 
-  ProfileViewModel(
-    this.input, {
-    AuthRepo authRepo,
-    AppTextValidator validator,
-  })  : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
-        _validator = validator ?? DependenciesFactory.appTextValidator() {
+  ProfileViewModel(this.input,
+      {AuthRepo authRepo,
+        AppTextValidator validator,
+        FirestoreApi firestoreApi})
+      : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
+        _validator = validator ?? DependenciesFactory.appTextValidator(),
+        _firestoreApi = firestoreApi ?? DependenciesFactory.fireStoreApi() {
     Stream<UIModel<bool>> _confirmResult = input.onConfirm.flatMap((value) {
       if (_list.isNotEmpty) {
         try {
           return _authRepo
               .signUp(
-                  email: _list?.first?.textValue,
-                  password: _list?.last?.textValue)
+              email: _list?.first?.textValue,
+              password: _list?.last?.textValue)
               .asBroadcastStream()
-              .map((result) {
-            debugPrint("Signed up with ${result.credential.signInMethod}");
-            return UIModel.success(true);
+              .flatMap((credential) {
+            String uid = credential.user.uid;
+            Map<String, dynamic> data = {
+              ApiKey.email : credential.user.email,
+              //TODO: get name from input fields
+            };
+            return _firestoreApi.updateProfileData(uid, data).map((event) {
+              debugPrint(
+                  "Signed up with ${credential.credential.signInMethod}");
+              return UIModel.success(true);
+            });
           });
         } catch (e) {
           debugPrint(e.toString());
@@ -40,7 +53,7 @@ class ProfileViewModel {
       return Stream.empty();
     });
     Stream<List<AppInputFieldModel>> _profileFields =
-        input.loadFields.flatMap((value) {
+    input.loadFields.flatMap((value) {
       _list.add(AppInputFieldModel(
         textValue: '',
         image: AppIcons.user_icon,
@@ -85,11 +98,11 @@ class ProfileViewModel {
     });
 
     Stream<List<AppInputFieldModel>> _fieldsChanged =
-        input.valueChanged.map((field) {
+    input.valueChanged.map((field) {
       field.error = null;
       _list
           .firstWhere((element) => element.fieldType == field.fieldType,
-              orElse: () => null)
+          orElse: () => null)
           ?.textValue = field.textValue;
       return _list;
     });
