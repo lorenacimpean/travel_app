@@ -5,6 +5,7 @@ import 'package:travel_app/themes/app_dimen.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/discover/discover_screen.dart';
 import 'package:travel_app/ui/navigation_menu/navigation_menu_view_model.dart';
+import 'package:travel_app/ui/profile/profile_screen.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
 
@@ -77,7 +78,7 @@ class NavigationMenuState extends BaseState<NavigationMenu> {
         screen = DiscoverScreen();
         break;
       case NavigationMenuEntry.profile:
-        screen = DummyScreen();
+        screen = ProfileScreen();
         break;
       case NavigationMenuEntry.privacyPolicy:
         screen = DummyScreen();

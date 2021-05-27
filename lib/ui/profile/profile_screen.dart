@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/ui/profile/profile_view_model.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
@@ -29,11 +30,12 @@ class ProfileScreenState extends BaseState<ProfileScreen> {
       PublishSubject(),
     ));
     _bindViewModel();
-    _vm.input.loadFields.add(true);
+    _vm.input.onStart.add(true);
   }
 
   void _bindViewModel() {
-    disposeLater(_vm.output.onFieldsLoaded.listen((response) {
+
+    disposeLater(_vm.output.loadFields.listen((response) {
       setState(() {
         if (response is Error) {
           displayErrorModal(this.context, response.toString());
@@ -41,6 +43,7 @@ class ProfileScreenState extends BaseState<ProfileScreen> {
         _formModels = response;
       });
     }));
+
     disposeLater(_vm.output.onEditResult.listen((response) {
       setState(() {
         switch (response.state) {
@@ -53,7 +56,6 @@ class ProfileScreenState extends BaseState<ProfileScreen> {
             break;
           case OperationState.ok:
             _showLoading = false;
-            Navigator.of(context).pop();
             break;
         }
       });
@@ -75,6 +77,7 @@ class ProfileScreenState extends BaseState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScreen(
+      leftIcon: AppIcons.menuIcon,
       title: AppStrings.profile,
       body: _showLoading
           ? LoadingWidget()

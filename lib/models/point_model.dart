@@ -27,4 +27,25 @@ class PointModel {
       imageUrl: json[ApiKey.imageUrl],
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PointModel &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          description == other.description &&
+          duration == other.duration &&
+          location == other.location &&
+          imageUrl == other.imageUrl &&
+          address == other.address;
+
+  @override
+  int get hashCode =>
+      name.hashCode ^
+      description.hashCode ^
+      duration.hashCode ^
+      location.hashCode ^
+      imageUrl.hashCode ^
+      address.hashCode;
 }

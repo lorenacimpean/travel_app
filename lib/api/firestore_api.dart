@@ -38,4 +38,22 @@ class FirestoreApi {
       return snap.docs.map((doc) => doc.data()).toList();
     });
   }
+
+  Stream<Map<String, dynamic>> getUserInfo(String uuid) {
+    return _firestore
+        .collection(ApiKey.users)
+        .doc(uuid)
+        .get()
+        .asStream()
+        .map((snap) => snap.data());
+  }
+
+  Stream<void> updateProfileData(
+      String uuid, Map<String, dynamic> profileData) {
+    return _firestore
+        .collection(ApiKey.users)
+        .doc(uuid)
+        .set(profileData)
+        .asStream();
+  }
 }

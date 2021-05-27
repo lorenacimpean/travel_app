@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/repo/auth_repo.dart';
+import 'package:travel_app/repo/profile_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/utils/dependencies_factory.dart';
@@ -9,79 +10,97 @@ import 'package:travel_app/utils/ui_model.dart';
 
 class ProfileViewModel {
   final Input input;
-  final AuthRepo _authRepo;
+  final ProfileRepo _profileRepo;
+
   Output output;
   List<AppInputFieldModel> _list = [];
   final AppTextValidator _validator;
 
-  ProfileViewModel(
-    this.input, {
-    AuthRepo authRepo,
-    AppTextValidator validator,
-  })  : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
-        _validator = validator ?? DependenciesFactory.appTextValidator() {
+  ProfileViewModel(this.input,
+      {AuthRepo authRepo, AppTextValidator validator, ProfileRepo profileRepo})
+      : _validator = validator ?? DependenciesFactory.appTextValidator(),
+        _profileRepo = profileRepo ?? DependenciesFactory.profileRepo() {
     Stream<UIModel<bool>> _confirmResult = input.onConfirm.flatMap((value) {
-      if (_list.isNotEmpty) {
-        try {
-          return _authRepo
-              .signUp(
-                  email: _list?.first?.textValue,
-                  password: _list?.last?.textValue)
-              .asBroadcastStream()
-              .map((result) {
-            debugPrint("Signed up with ${result.credential.signInMethod}");
-            return UIModel.success(true);
-          });
-        } catch (e) {
-          debugPrint(e.toString());
-          return Stream.value(UIModel.error(e));
-        }
+      if (_list.isNotEmpty && _list.areAllFieldsValid()) {
+        String firstName = _list
+            .firstWhere((element) => element.fieldType == FieldType.firstName)
+            .textValue;
+        String lastName = _list
+            .firstWhere((element) => element.fieldType == FieldType.lastName)
+            .textValue;
+        String email = _list
+            .firstWhere(
+                (element) => element.fieldType == FieldType.emailAddress)
+            .textValue;
+        return _profileRepo
+            .updateProfileData(
+                firstName: firstName, lastName: lastName, email: email)
+            .map((event) {
+              return UIModel.success(true);
+            })
+            .startWith(UIModel.loading())
+            .onErrorReturnWith((error) => UIModel.error(error));
       }
       return Stream.empty();
     });
+
     Stream<List<AppInputFieldModel>> _profileFields =
-        input.loadFields.flatMap((value) {
-      _list.add(AppInputFieldModel(
-        textValue: '',
-        image: AppIcons.user_icon,
-        error: null,
-        fieldType: FieldType.name,
-        textController: TextEditingController(),
-        onValueChanged: (model) {
-          input.valueChanged.add(model);
-        },
-      ));
-      _list.add(AppInputFieldModel(
-        textValue: '',
-        image: AppIcons.emailIcon,
-        error: null,
-        fieldType: FieldType.emailAddress,
-        textController: TextEditingController(),
-        onValueChanged: (model) {
-          input.valueChanged.add(model);
-        },
-      ));
-      _list.add(AppInputFieldModel(
-        textValue: '',
-        image: AppIcons.keyIcon,
-        error: null,
-        fieldType: FieldType.password,
-        textController: TextEditingController(),
-        onValueChanged: (model) {
-          input.valueChanged.add(model);
-        },
-      ));
-      _list.add(AppInputFieldModel(
-        textValue: '',
-        error: null,
-        image: AppIcons.keyIcon,
-        fieldType: FieldType.confirmPassword,
-        textController: TextEditingController(),
-        onValueChanged: (model) {
-          input.valueChanged.add(model);
-        },
-      ));
-      return Stream.value(_list);
+        input.onStart.flatMap((value) {
+      return _profileRepo.getUserInfo().map((profile) {
+        _list.add(AppInputFieldModel(
+          textValue: '',
+          image: AppIcons.user_icon,
+          error: null,
+          fieldType: FieldType.firstName,
+          textController: TextEditingController()
+            ..text = profile.firstName ?? '',
+          onValueChanged: (model) {
+            input.valueChanged.add(model);
+          },
+        ));
+        _list.add(AppInputFieldModel(
+          textValue: '',
+          image: AppIcons.user_icon,
+          error: null,
+          fieldType: FieldType.lastName,
+          textController: TextEditingController()
+            ..text = profile.lastName ?? '',
+          onValueChanged: (model) {
+            input.valueChanged.add(model);
+          },
+        ));
+        _list.add(AppInputFieldModel(
+          textValue: profile.email ?? '',
+          image: AppIcons.emailIcon,
+          error: null,
+          fieldType: FieldType.emailAddress,
+          textController: TextEditingController()..text = profile.email ?? '',
+          onValueChanged: (model) {
+            input.valueChanged.add(model);
+          },
+        ));
+        _list.add(AppInputFieldModel(
+          textValue: '',
+          image: AppIcons.keyIcon,
+          error: null,
+          fieldType: FieldType.password,
+          textController: TextEditingController(),
+          onValueChanged: (model) {
+            input.valueChanged.add(model);
+          },
+        ));
+        _list.add(AppInputFieldModel(
+          textValue: '',
+          error: null,
+          image: AppIcons.keyIcon,
+          fieldType: FieldType.confirmPassword,
+          textController: TextEditingController(),
+          onValueChanged: (model) {
+            input.valueChanged.add(model);
+          },
+        ));
+        return _list;
+      });
     });
 
     Stream<List<AppInputFieldModel>> _fieldsChanged =
@@ -93,6 +112,7 @@ class ProfileViewModel {
           ?.textValue = field.textValue;
       return _list;
     });
+
     Stream<List<AppInputFieldModel>> _onConfirm = input.onConfirm.flatMap((_) {
       String password = "";
       _list.forEach((model) {
@@ -118,16 +138,16 @@ class ProfileViewModel {
 }
 
 class Input {
-  final Subject<bool> loadFields;
+  final Subject<bool> onStart;
   final Subject<AppInputFieldModel> valueChanged;
   final Subject<bool> onConfirm;
 
-  Input(this.loadFields, this.valueChanged, this.onConfirm);
+  Input(this.onStart, this.valueChanged, this.onConfirm);
 }
 
 class Output {
-  final Stream<List<AppInputFieldModel>> onFieldsLoaded;
+  final Stream<List<AppInputFieldModel>> loadFields;
   final Stream<UIModel<bool>> onEditResult;
 
-  Output(this.onFieldsLoaded, this.onEditResult);
+  Output(this.loadFields, this.onEditResult);
 }

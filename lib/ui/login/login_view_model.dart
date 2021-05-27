@@ -28,11 +28,12 @@ class LoginViewModel {
             .login(
                 email: _list?.first?.textValue,
                 password: _list?.last?.textValue)
-            .asBroadcastStream()
             .map((result) {
           debugPrint("Successfully logged in");
           return UIModel.success(true);
-        }).onErrorReturnWith((error) => UIModel.error(error));
+        }).onErrorReturnWith((error) {
+          return UIModel.error(error);
+        });
       }
       return Stream.empty();
     });

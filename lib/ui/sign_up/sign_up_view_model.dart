@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:travel_app/api/api_keys.dart';
+import 'package:travel_app/api/firestore_api.dart';
 import 'package:travel_app/repo/auth_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
@@ -12,32 +14,38 @@ import 'package:travel_app/utils/ui_model.dart';
 class SignUpViewModel {
   final Input input;
   final AuthRepo _authRepo;
+  final FirestoreApi _firestoreApi;
   Output output;
   List<AppInputFieldModel> _list = [];
   final AppTextValidator _validator;
 
-  SignUpViewModel(
-    this.input, {
-    AuthRepo authRepo,
-    AppTextValidator validator,
-  })  : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
-        _validator = validator ?? DependenciesFactory.appTextValidator() {
+  SignUpViewModel(this.input,
+      {AuthRepo authRepo,
+      AppTextValidator validator,
+      FirestoreApi firestoreApi})
+      : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
+        _validator = validator ?? DependenciesFactory.appTextValidator(),
+        _firestoreApi = firestoreApi ?? DependenciesFactory.fireStoreApi() {
     Stream<UIModel<bool>> _signUpResult = input.signUp.flatMap((value) {
-      if (_list.isNotEmpty) {
-        try {
-          return _authRepo
-              .signUp(
-                  email: _list?.first?.textValue,
-                  password: _list?.last?.textValue)
-              .asBroadcastStream()
-              .map((result) {
-            debugPrint("Signed up with ${result.credential.signInMethod}");
-            return UIModel.success(true);
-          });
-        } catch (e) {
-          debugPrint(e.toString());
-          return Stream.value(UIModel.error(e));
-        }
+      if (_list.isNotEmpty && _list.areAllFieldsValid()) {
+        return _authRepo
+            .signUp(
+                email: _list?.first?.textValue,
+                password: _list?.last?.textValue)
+            .asBroadcastStream()
+            .flatMap((credential) {
+              String uid = credential.user.uid;
+              Map<String, dynamic> data = {
+                ApiKey.email: credential.user.email,
+              };
+              return _firestoreApi.updateProfileData(uid, data).map((_) {
+                return UIModel.success(true);
+              });
+            })
+            .startWith(UIModel.loading())
+            .onErrorReturnWith((error) {
+              return UIModel.error(error);
+            });
       }
       return Stream.empty();
     });
@@ -87,10 +95,11 @@ class SignUpViewModel {
       return _list;
     });
 
-    Stream<List<AppInputFieldModel>> _onSignIn = input.signUp.flatMap((_) {
-      String password = "";
+    Stream<List<AppInputFieldModel>> _onSignUp = input.signUp.flatMap((_) {
+      String password = _list
+          .firstWhere((element) => element.fieldType == FieldType.password)
+          .textValue;
       _list.forEach((model) {
-        if (model.fieldType == FieldType.password) password = model.textValue;
         model.error = _validator.validate(model, password: password);
       });
       if (_list.areAllFieldsValid()) {
@@ -105,7 +114,7 @@ class SignUpViewModel {
         MergeStream([
           _signUpFields,
           _fieldsChanged,
-          _onSignIn,
+          _onSignUp,
         ]),
         _signUpResult);
   }
