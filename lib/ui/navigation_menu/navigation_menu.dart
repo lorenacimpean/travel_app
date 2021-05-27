@@ -6,10 +6,11 @@ import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/discover/discover_screen.dart';
 import 'package:travel_app/ui/navigation_menu/navigation_menu_view_model.dart';
 import 'package:travel_app/ui/profile/profile_screen.dart';
+import 'package:travel_app/ui/support/support_screen.dart';
 import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
 
-import '../dummy_screen.dart';
+import '../privacy_policy/privacy_policy_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   @override
@@ -81,10 +82,10 @@ class NavigationMenuState extends BaseState<NavigationMenu> {
         screen = ProfileScreen();
         break;
       case NavigationMenuEntry.privacyPolicy:
-        screen = DummyScreen();
+        screen = PrivacyPolicyScreen();
         break;
       case NavigationMenuEntry.contactSupport:
-        screen = DummyScreen();
+        screen = SupportScreen();
         break;
       default:
         screen = DiscoverScreen();

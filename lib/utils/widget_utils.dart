@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 class WidgetUtils {
   static const String googleMapsDeeplink =
       "https://www.google.com/maps/dir/?api=1";
+  static const String supportPhone = "0756355916";
 
   static void launchMapsWithWayPoints(List<LocationModel> locations) async {
     String link = googleMapsDeeplink;
@@ -32,5 +33,9 @@ class WidgetUtils {
     } else {
       throw 'Could not open the map.';
     }
+  }
+
+  static void launchDialerWithSupportPhone() {
+    launch("tel://$supportPhone");
   }
 }
