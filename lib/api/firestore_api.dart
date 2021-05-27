@@ -48,7 +48,7 @@ class FirestoreApi {
         .map((snap) => snap.data());
   }
 
-  Stream<Map<String, dynamic>> updateProfileData(
+  Stream<void> updateProfileData(
       String uuid, Map<String, dynamic> profileData) {
     return _firestore
         .collection(ApiKey.users)

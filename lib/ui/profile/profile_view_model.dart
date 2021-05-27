@@ -20,45 +20,63 @@ class ProfileViewModel {
 
   ProfileViewModel(this.input,
       {AuthRepo authRepo,
-        AppTextValidator validator,
-        FirestoreApi firestoreApi})
+      AppTextValidator validator,
+      FirestoreApi firestoreApi})
       : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
         _validator = validator ?? DependenciesFactory.appTextValidator(),
         _firestoreApi = firestoreApi ?? DependenciesFactory.fireStoreApi() {
     Stream<UIModel<bool>> _confirmResult = input.onConfirm.flatMap((value) {
       if (_list.isNotEmpty) {
-        try {
-          return _authRepo
-              .signUp(
-              email: _list?.first?.textValue,
-              password: _list?.last?.textValue)
-              .asBroadcastStream()
-              .flatMap((credential) {
-            String uid = credential.user.uid;
-            Map<String, dynamic> data = {
-              ApiKey.email : credential.user.email,
-              //TODO: get name from input fields
-            };
-            return _firestoreApi.updateProfileData(uid, data).map((event) {
-              debugPrint(
-                  "Signed up with ${credential.credential.signInMethod}");
-              return UIModel.success(true);
-            });
-          });
-        } catch (e) {
-          debugPrint(e.toString());
-          return Stream.value(UIModel.error(e));
-        }
+        return _authRepo.getAuthInfo().asBroadcastStream().flatMap((user) {
+          String uid = user.uid;
+          String firstName = _list
+              .firstWhere((element) => element.fieldType == FieldType.firstName)
+              .textValue;
+          String lastName = _list
+              .firstWhere((element) => element.fieldType == FieldType.lastName)
+              .textValue;
+          String email = _list
+              .firstWhere(
+                  (element) => element.fieldType == FieldType.emailAddress)
+              .textValue;
+          Map<String, dynamic> data = {
+            ApiKey.email: email != null ? email : user.email,
+            ApiKey.firstName: firstName,
+            ApiKey.lastName: lastName
+          };
+          return _firestoreApi
+              .updateProfileData(uid, data)
+              .map((event) {
+                return UIModel.success(true);
+              })
+              .startWith(UIModel.loading())
+              .onErrorReturnWith((error) => UIModel.error(error));
+
+          //TODO: check NoSuchMethodError: The getter 'signInMethod' was called on null.
+          // Receiver: null
+          // Tried calling: signInMethod
+        });
       }
       return Stream.empty();
     });
+
     Stream<List<AppInputFieldModel>> _profileFields =
-    input.loadFields.flatMap((value) {
+        input.loadFields.flatMap((value) {
       _list.add(AppInputFieldModel(
         textValue: '',
         image: AppIcons.user_icon,
         error: null,
-        fieldType: FieldType.name,
+        fieldType: FieldType.firstName,
+        textController: TextEditingController(),
+        onValueChanged: (model) {
+          input.valueChanged.add(model);
+        },
+      ));
+      _list.add(AppInputFieldModel(
+        textValue: '',
+        image: AppIcons.user_icon,
+        error: null,
+        fieldType: FieldType.lastName,
         textController: TextEditingController(),
         onValueChanged: (model) {
           input.valueChanged.add(model);
@@ -98,11 +116,11 @@ class ProfileViewModel {
     });
 
     Stream<List<AppInputFieldModel>> _fieldsChanged =
-    input.valueChanged.map((field) {
+        input.valueChanged.map((field) {
       field.error = null;
       _list
           .firstWhere((element) => element.fieldType == field.fieldType,
-          orElse: () => null)
+              orElse: () => null)
           ?.textValue = field.textValue;
       return _list;
     });

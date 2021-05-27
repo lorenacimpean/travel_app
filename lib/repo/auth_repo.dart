@@ -25,4 +25,9 @@ class AuthRepo {
         .asStream()
         .handleError((error) => Stream.error(error));
   }
+
+  Stream<User> getAuthInfo() {
+    return Stream.value(_auth.currentUser)
+        .handleError((error) => Stream.error(error));
+  }
 }

@@ -58,7 +58,4 @@ class AppStrings {
   static const String profile = "Profile";
   static const String privacyPolicy = "Privacy Policy";
   static const String contactSupport = "Contact Support";
-
-
-
 }
