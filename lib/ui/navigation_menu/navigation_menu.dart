@@ -10,6 +10,7 @@ import 'package:travel_app/utils/base_state.dart';
 import 'package:travel_app/utils/round_container_widget.dart';
 
 import '../dummy_screen.dart';
+import '../privacy_policy/privacy_policy_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   @override
@@ -81,7 +82,7 @@ class NavigationMenuState extends BaseState<NavigationMenu> {
         screen = ProfileScreen();
         break;
       case NavigationMenuEntry.privacyPolicy:
-        screen = DummyScreen();
+        screen = PrivacyPolicyScreen();
         break;
       case NavigationMenuEntry.contactSupport:
         screen = DummyScreen();
