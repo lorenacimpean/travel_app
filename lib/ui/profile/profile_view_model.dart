@@ -39,6 +39,7 @@ class ProfileViewModel {
               .firstWhere(
                   (element) => element.fieldType == FieldType.emailAddress)
               .textValue;
+
           Map<String, dynamic> data = {
             ApiKey.email: email != null ? email : user.email,
             ApiKey.firstName: firstName,
@@ -51,10 +52,6 @@ class ProfileViewModel {
               })
               .startWith(UIModel.loading())
               .onErrorReturnWith((error) => UIModel.error(error));
-
-          //TODO: check NoSuchMethodError: The getter 'signInMethod' was called on null.
-          // Receiver: null
-          // Tried calling: signInMethod
         });
       }
       return Stream.empty();

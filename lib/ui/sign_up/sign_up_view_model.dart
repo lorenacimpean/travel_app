@@ -39,8 +39,6 @@ class SignUpViewModel {
                 ApiKey.email: credential.user.email,
               };
               return _firestoreApi.updateProfileData(uid, data).map((_) {
-                debugPrint(
-                    "Signed up with ${credential.credential.signInMethod}");
                 return UIModel.success(true);
               });
             })
