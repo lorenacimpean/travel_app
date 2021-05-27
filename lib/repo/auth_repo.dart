@@ -13,7 +13,9 @@ class AuthRepo {
     return _auth
         .signInWithEmailAndPassword(email: email, password: password)
         .asStream()
-        .handleError((error) => Stream.error(error));
+        .handleError((error) {
+          return Stream.error(error);
+        });
   }
 
   Stream<UserCredential> signUp({

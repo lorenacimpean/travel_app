@@ -54,7 +54,7 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
             break;
           case OperationState.ok:
             _showLoading = false;
-            Navigator.push(context,
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => DiscoverScreen()));
             break;
         }

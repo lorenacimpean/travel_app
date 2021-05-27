@@ -22,69 +22,71 @@ class AppModalWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius:
-            BorderRadius.all(Radius.circular(AppDimen.defaultCornerRadius)),
-        boxShadow: [AppColors.defaultShadow],
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Flexible(
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                      horizontal: AppDimen.largePadding,
-                      vertical: AppDimen.defaultPadding)
-                  .copyWith(bottom: AppDimen.smallPadding),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Flexible(
-                    flex: 2,
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      height: 0,
-                    ),
-                  ),
-                  xButton(context),
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            height: AppDimen.separatorSize,
-            color: Theme.of(context).dividerColor,
-          ),
-          Flexible(
-            child: SingleChildScrollView(
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius:
+              BorderRadius.all(Radius.circular(AppDimen.defaultCornerRadius)),
+          boxShadow: [AppColors.defaultShadow],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Flexible(
               child: Container(
-                height: maxHeight,
                 padding: EdgeInsets.symmetric(
-                    vertical: AppDimen.smallPadding,
-                    horizontal: AppDimen.largePadding),
-                child: body,
+                        horizontal: AppDimen.largePadding,
+                        vertical: AppDimen.defaultPadding)
+                    .copyWith(bottom: AppDimen.smallPadding),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 2,
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 0,
+                      ),
+                    ),
+                    xButton(context),
+                  ],
+                ),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.all(AppDimen.largePadding)
-                .copyWith(top: AppDimen.smallPadding),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: actions,
+            Divider(
+              height: AppDimen.separatorSize,
+              color: Theme.of(context).dividerColor,
             ),
-          ),
-        ],
+            Flexible(
+              child: SingleChildScrollView(
+                child: Container(
+                  height: maxHeight,
+                  padding: EdgeInsets.symmetric(
+                      vertical: AppDimen.smallPadding,
+                      horizontal: AppDimen.largePadding),
+                  child: body,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(AppDimen.largePadding)
+                  .copyWith(top: AppDimen.smallPadding),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: actions,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

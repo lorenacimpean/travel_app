@@ -49,6 +49,12 @@ class AppTextValidator {
 
   String validate(AppInputFieldModel model, {String password}) {
     switch (model.fieldType) {
+      case FieldType.firstName:
+        return textValidator(model.textValue);
+        break;
+      case FieldType.lastName:
+        return textValidator(model.textValue);
+        break;
       case FieldType.emailAddress:
         return emailValidator(model.textValue);
         break;
