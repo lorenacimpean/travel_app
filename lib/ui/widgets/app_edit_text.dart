@@ -9,7 +9,7 @@ enum FieldType { emailAddress, password, confirmPassword, firstName, lastName }
 
 typedef OnAppInputFieldChange(AppInputFieldModel model);
 
-class AppInputFieldWidget extends StatelessWidget {
+class AppInputFieldWidget extends StatefulWidget {
   final TextInputType textInputType;
   final TextEditingController controller;
   final String label;
@@ -42,54 +42,75 @@ class AppInputFieldWidget extends StatelessWidget {
   }
 
   @override
+  _AppInputFieldWidgetState createState() => _AppInputFieldWidgetState();
+}
+
+class _AppInputFieldWidgetState extends State<AppInputFieldWidget> {
+  bool passwordTextVisible = false;
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Align(
           alignment: Alignment.topLeft,
           child: TextFormField(
-            style: error == null
+            style: widget.error == null
                 ? Theme.of(context).textTheme.subtitle2
                 : Theme.of(context).textTheme.button,
-            controller: controller,
+            controller: widget.controller,
             decoration: InputDecoration(
-              errorText: error,
+              errorText: widget.error,
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                    color: error == null
+                    color: widget.error == null
                         ? AppColors.darkGrey
                         : Theme.of(context).errorColor,
                     width: AppDimen.separatorSize),
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                    color: error == null
+                    color: widget.error == null
                         ? AppColors.darkGrey
                         : Theme.of(context).errorColor,
                     width: AppDimen.separatorSize),
               ),
-              labelText: label,
-              labelStyle: error == null
+              labelText: widget.label,
+              labelStyle: widget.error == null
                   ? AppTextStyle.subtitle1
                   : Theme.of(context).textTheme.button,
             ),
-            keyboardType: textInputType,
-            onChanged: onValueChanged,
-            obscureText: textInputType == TextInputType.visiblePassword,
+            keyboardType: widget.textInputType,
+            onChanged: widget.onValueChanged,
+            obscureText: _showPassword,
           ),
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: AppDimen.defaultPadding,
-              right: AppDimen.smallPadding,
+        GestureDetector(
+          onTap: () {
+            if (widget.textInputType == TextInputType.visiblePassword) {
+              setState(() {
+                passwordTextVisible = !passwordTextVisible;
+              });
+            }
+          },
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: AppDimen.defaultPadding,
+                right: AppDimen.smallPadding,
+              ),
+              child: Image(image: widget.image),
             ),
-            child: Image(image: image),
           ),
         ),
       ],
     );
+  }
+
+  bool get _showPassword {
+    return widget.textInputType == TextInputType.visiblePassword &&
+        !passwordTextVisible;
   }
 }
 
