@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:travel_app/themes/app_colors.dart';
 import 'package:travel_app/themes/app_dimen.dart';
-import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/widgets/pink_button.dart';
 
@@ -24,6 +23,7 @@ class AppModalWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        margin: EdgeInsets.symmetric(horizontal: AppDimen.defaultPadding),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius:
@@ -32,7 +32,6 @@ class AppModalWidget extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Flexible(
               child: Container(
@@ -41,8 +40,6 @@ class AppModalWidget extends StatelessWidget {
                         vertical: AppDimen.defaultPadding)
                     .copyWith(bottom: AppDimen.smallPadding),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Flexible(
@@ -57,14 +54,9 @@ class AppModalWidget extends StatelessWidget {
                         height: 0,
                       ),
                     ),
-                    xButton(context),
                   ],
                 ),
               ),
-            ),
-            Divider(
-              height: AppDimen.separatorSize,
-              color: Theme.of(context).dividerColor,
             ),
             Flexible(
               child: SingleChildScrollView(
@@ -81,23 +73,13 @@ class AppModalWidget extends StatelessWidget {
               padding: EdgeInsets.all(AppDimen.largePadding)
                   .copyWith(top: AppDimen.smallPadding),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: actions,
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget xButton(BuildContext context) {
-    return GestureDetector(
-      child: Image(
-        image: AppIcons.back_icon,
-        color: AppColors.darkGrey,
-      ),
-      onTap: () => Navigator.of(context).pop(),
     );
   }
 }

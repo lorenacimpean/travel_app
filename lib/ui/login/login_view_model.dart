@@ -32,6 +32,7 @@ class LoginViewModel {
           debugPrint("Successfully logged in");
           return UIModel.success(true);
         }).onErrorReturnWith((error) {
+          debugPrint("${error.toString()}");
           return UIModel.error(error);
         });
       }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/themes/app_theme.dart';
 import 'package:travel_app/ui/intro/intro_screen.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
