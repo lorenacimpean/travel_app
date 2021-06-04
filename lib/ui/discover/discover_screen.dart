@@ -22,7 +22,7 @@ class DiscoverScreen extends StatefulWidget {
 
 class DiscoverScreenState extends BaseState<DiscoverScreen>
     with PermissionHandler {
-  static final double _cardSize = 150;
+  static final double _playButtonSize = 150;
   DiscoverViewModel _vm;
   List<RouteModel> _routes;
   bool _showLoading = false;
@@ -107,64 +107,75 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
   }
 
   Widget _cardWidget(RouteModel route) {
-    return Padding(
-      padding: EdgeInsets.all(AppDimen.defaultPadding),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(
-          Radius.circular(
-            AppDimen.defaultCornerRadius,
-          ),
-        ),
-        child: Stack(
-          children: [
-            InkWell(
-              onTap: () => _vm.input.onRouteTapped.add(route),
-              child:
-                  Image.asset(AppIcons.mainPhoto.assetName, fit: BoxFit.cover),
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.only(
+              left: AppDimen.defaultPadding,
+              right: AppDimen.defaultPadding,
+              bottom: AppDimen.xlPadding),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                AppDimen.defaultCornerRadius,
+              ),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: Stack(
               children: [
-                Padding(
-                  padding: EdgeInsets.all(AppDimen.defaultPadding),
-                  child: BlurredButton(
-                    text: route.description ?? "",
+                InkWell(
+                  onTap: () => _vm.input.onRouteTapped.add(route),
+                  child: Image.asset(
+                    AppIcons.mainPhoto.assetName,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(AppDimen.defaultPadding),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Duration: ${route.duration}" ?? "",
-                        style: AppTextStyle.button2,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(AppDimen.defaultPadding),
+                      child: BlurredButton(
+                        text: route.description ?? "",
                       ),
-                      Text(
-                        "Stops: ${route.pointIds.length}" ?? "",
-                        style: AppTextStyle.button2,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: AppDimen.midPadding * 4,
+                          left: AppDimen.defaultPadding,
+                          right: AppDimen.defaultPadding),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Duration: ${route.duration}" ?? "",
+                            style: AppTextStyle.button2,
+                          ),
+                          Text(
+                            "Stops: ${route.pointIds.length}" ?? "",
+                            style: AppTextStyle.button2,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.only(top: AppDimen.xxxlPadding),
-                child: Image(
-                  height: _cardSize,
-                  fit: BoxFit.contain,
-                  image: AppIcons.play_icon,
-                  // fit: BoxFit.fitHeight,
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+        Positioned(
+          top: _playButtonSize,
+          left: MediaQuery.of(context).size.width / 2 - 65,
+          child: Container(
+            height: _playButtonSize,
+            child: Image(
+              fit: BoxFit.contain,
+              image: AppIcons.play_icon,
+              // fit: BoxFit.fitHeight,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

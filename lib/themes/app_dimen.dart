@@ -1,5 +1,6 @@
 class AppDimen {
   static final double xxxlPadding = 120;
+  static final double xxlPadding = 80;
   static final double xlPadding = 64.0;
   static final double largePadding = 32.0;
   static final double midLargePadding = 24.0;
