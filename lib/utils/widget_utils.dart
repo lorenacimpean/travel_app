@@ -13,7 +13,7 @@ class WidgetUtils {
     link += "&destination=${locations.last.string}";
     String waypoints = "&waypoints=";
     for (int i = 1; i < locations.length - 1; i++) {
-      waypoints += locations[i].string;
+      waypoints += "${locations[i].string}|";
     }
     link += waypoints;
     if (await canLaunch(link)) {
