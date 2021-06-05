@@ -105,14 +105,14 @@ class RouteDetailsWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
             child: Text(
-              AppStrings.description,
+              route.name,
               style: AppTextStyle.headline1,
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
             child: Text(
-              "This is where the route description goes",
+              route.description,
               style: AppTextStyle.subtitle2.copyWith(
                 fontSize: AppDimen.subtitle1,
               ),
