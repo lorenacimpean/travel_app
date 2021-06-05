@@ -100,7 +100,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
     return Padding(
       padding: EdgeInsets.all(AppDimen.defaultPadding),
       child: Text(
-        AppStrings.dummyText,
+        AppStrings.discoverSubtitle,
         style: AppTextStyle.button,
       ),
     );
