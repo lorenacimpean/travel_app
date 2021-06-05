@@ -2,14 +2,17 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:travel_app/themes/app_colors.dart';
-import 'package:travel_app/themes/app_icons.dart';
+import 'package:travel_app/themes/app_dimen.dart';
+import 'package:travel_app/ui/widgets/app_network_image.dart';
 
 class RoundContainerWidget extends StatelessWidget {
   final WidgetType widgetType;
+  final String imgUrl;
 
   const RoundContainerWidget({
     Key key,
     @required this.widgetType,
+    this.imgUrl,
   }) : super(key: key);
 
   @override
@@ -39,8 +42,11 @@ class RoundContainerWidget extends StatelessWidget {
         return ClipOval(
           clipper: ColorClipper.photo(),
           child: Container(
-            child: Image(
-              image: AppIcons.lights,
+            child: AppNetworkImage(
+              imgUrl,
+              imageHeight: MediaQuery.of(context).size.height / 2 +
+                  AppDimen.defaultPadding,
+              imageWidth: MediaQuery.of(context).size.width,
             ),
           ),
         );

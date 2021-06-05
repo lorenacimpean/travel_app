@@ -7,6 +7,7 @@ import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/route_details/route_details_screen.dart';
+import 'package:travel_app/ui/widgets/app_network_image.dart';
 import 'package:travel_app/ui/widgets/base_screen.dart';
 import 'package:travel_app/ui/widgets/blurred_button.dart';
 import 'package:travel_app/utils/base_state.dart';
@@ -100,7 +101,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
     return Padding(
       padding: EdgeInsets.all(AppDimen.defaultPadding),
       child: Text(
-        AppStrings.dummyText,
+        AppStrings.discoverSubtitle,
         style: AppTextStyle.button,
       ),
     );
@@ -113,7 +114,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
           margin: EdgeInsets.only(
               left: AppDimen.defaultPadding,
               right: AppDimen.defaultPadding,
-              bottom: AppDimen.xxlPadding),
+              bottom: AppDimen.defaultPadding),
           child: ClipRRect(
             borderRadius: BorderRadius.all(
               Radius.circular(
@@ -124,8 +125,9 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
               children: [
                 InkWell(
                   onTap: () => _vm.input.onRouteTapped.add(route),
-                  child: Image.asset(
-                    AppIcons.mainPhoto.assetName,
+                  child: AppNetworkImage(
+                    route.imgUrl,
+                    imageWidth: MediaQuery.of(context).size.width,
                   ),
                 ),
                 Column(

@@ -27,14 +27,10 @@ class AppStrings {
   static const String photoListError = "Photo list is not available";
   static const String generalError = "Something went wrong!";
 
-
-
   // Discover screen
   static const String discover = "Discover";
-  static const String dummyText =
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ";
-
-  //"Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam f";
+  static const String discoverSubtitle =
+      "Whether you're a city resident just visiting Cluj-Napoca, our tours will teach you about the architecture and the history of the city through its key buildings and public spaces. Join us to learn the story of Cluj-Napoca’s past, present and future.";
 
   // Route details screen
   static const String description = "Description";
