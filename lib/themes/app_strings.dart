@@ -30,7 +30,7 @@ class AppStrings {
   // Discover screen
   static const String discover = "Discover";
   static const String discoverSubtitle =
-      "Whether you're a city resident or are just visiting Cluj-Napoca, our tours will teach you about the architecture and the history of the city through its key buildings and public spaces. Join us to learn the story of Cluj-Napoca’s past, present and future.";
+      "Whether you're a city resident just visiting Cluj-Napoca, our tours will teach you about the architecture and the history of the city through its key buildings and public spaces. Join us to learn the story of Cluj-Napoca’s past, present and future.";
 
   // Route details screen
   static const String description = "Description";
