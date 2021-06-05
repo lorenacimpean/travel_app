@@ -43,6 +43,7 @@ class RouteDetailsWidget extends StatelessWidget {
             children: [
               RoundContainerWidget(
                 widgetType: WidgetType.photoOverlay,
+                imgUrl: route.imgUrl,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
