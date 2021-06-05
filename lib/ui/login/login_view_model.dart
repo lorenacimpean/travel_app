@@ -23,7 +23,7 @@ class LoginViewModel {
   })  : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
         _validator = validator ?? DependenciesFactory.appTextValidator() {
     Stream<UIModel<bool>> _loginResult = input.signIn.flatMap((value) {
-      if (_list.isNotEmpty) {
+      if (_list.areAllFieldsValid()) {
         return _authRepo
             .login(
                 email: _list?.first?.textValue,

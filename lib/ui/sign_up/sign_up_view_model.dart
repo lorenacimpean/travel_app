@@ -27,7 +27,7 @@ class SignUpViewModel {
         _validator = validator ?? DependenciesFactory.appTextValidator(),
         _firestoreApi = firestoreApi ?? DependenciesFactory.fireStoreApi() {
     Stream<UIModel<bool>> _signUpResult = input.signUp.flatMap((value) {
-      if (_list.isNotEmpty && _list.areAllFieldsValid()) {
+      if (_list.areAllFieldsValid()) {
         return _authRepo
             .signUp(
                 email: _list?.first?.textValue,
