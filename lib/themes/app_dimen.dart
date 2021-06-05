@@ -13,7 +13,7 @@ class AppDimen {
 
   //icon sizes:
   static final double defaultIconSize = 64.0;
-  static final double mediumIconSize = 40.0;
+  static final double mediumIconSize = 30.0;
   static final double smallIconSize = 16.0;
   static final double separatorSize = 1.0;
 

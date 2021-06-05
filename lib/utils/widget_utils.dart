@@ -23,18 +23,6 @@ class WidgetUtils {
     }
   }
 
-  static void launchMapsBetweenPoints(
-      LocationModel start, LocationModel end) async {
-    String link = googleMapsDeeplink;
-    link += "&origin=${start.string}";
-    link += "&destination=${end.string}";
-    if (await canLaunch(link)) {
-      await launch(link);
-    } else {
-      throw 'Could not open the map.';
-    }
-  }
-
   static void launchDialerWithSupportPhone() {
     launch("tel://$supportPhone");
   }

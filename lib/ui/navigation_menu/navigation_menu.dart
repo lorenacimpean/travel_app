@@ -109,7 +109,7 @@ class MenuEntryWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.all(AppDimen.defaultPadding),
+        padding: EdgeInsets.all(AppDimen.smallPadding),
         child: Text(
           descriptor.text,
           style: AppTextStyle.button2.copyWith(fontSize: AppDimen.headline2),

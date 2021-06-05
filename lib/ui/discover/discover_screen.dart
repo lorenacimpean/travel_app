@@ -24,7 +24,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
     with PermissionHandler {
   static final double _playButtonSize = 150;
   DiscoverViewModel _vm;
-  List<RouteModel> _routes;
+  List<RouteModel> _routes = [];
   bool _showLoading = false;
 
   @override
@@ -113,7 +113,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
           margin: EdgeInsets.only(
               left: AppDimen.defaultPadding,
               right: AppDimen.defaultPadding,
-              bottom: AppDimen.xlPadding),
+              bottom: AppDimen.xxlPadding),
           child: ClipRRect(
             borderRadius: BorderRadius.all(
               Radius.circular(
@@ -140,7 +140,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                          top: AppDimen.midPadding * 4,
+                          top: AppDimen.midPadding * 3,
                           left: AppDimen.defaultPadding,
                           right: AppDimen.defaultPadding),
                       child: Row(
@@ -164,8 +164,8 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
           ),
         ),
         Positioned(
-          top: _playButtonSize,
-          left: MediaQuery.of(context).size.width / 2 - 65,
+          top: _playButtonSize * 0.9,
+          left: MediaQuery.of(context).size.width / 2 - _playButtonSize / 2,
           child: Container(
             height: _playButtonSize,
             child: Image(

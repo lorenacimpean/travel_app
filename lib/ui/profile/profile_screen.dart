@@ -105,21 +105,20 @@ class ProfileScreenState extends BaseState<ProfileScreen> {
       title: AppStrings.profile,
       body: _showLoading
           ? LoadingWidget()
-          : Stack(
+          : ListView(
               children: [
                 FormContainer(
                   formFields: _formFields(),
                   buttonText: AppStrings.confirm,
                   onTap: () => _vm.input.onConfirm.add(true),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: AppDimen.xxlPadding),
-                    child: PinkButton(
-                      text: AppStrings.logout,
-                      onTap: () => _vm.input.logout.add(true),
-                    ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppDimen.xxlPadding,
+                      vertical: AppDimen.defaultPadding),
+                  child: PinkButton(
+                    text: AppStrings.logout,
+                    onTap: () => _vm.input.logout.add(true),
                   ),
                 ),
               ],

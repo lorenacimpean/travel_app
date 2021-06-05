@@ -21,7 +21,7 @@ class RouteDetailsWidget extends StatelessWidget {
   final Function(List<PointModel>) onOpenMapsTapped;
   final Function(PointModel) onPointTapped;
 
-  static final double _listViewSize = 200;
+  static final double _listViewHeight = 200;
 
   RouteDetailsWidget({
     Key key,
@@ -46,8 +46,8 @@ class RouteDetailsWidget extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: AppDimen.xlPadding,
-                  horizontal: AppDimen.largePadding,
+                  vertical: AppDimen.defaultPadding,
+                  horizontal: AppDimen.defaultPadding,
                 ),
                 child: Align(
                     alignment: Alignment.topLeft,
@@ -60,20 +60,21 @@ class RouteDetailsWidget extends StatelessWidget {
                   child: BlurredButton(text: route?.name ?? ""),
                 ),
               ),
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: AppDimen.xxxlPadding * 2),
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Image(
-                    fit: BoxFit.contain,
-                    image: AppIcons.play_icon,
-                    // fit: BoxFit.fitHeight,
-                  ),
+              Positioned(
+                top: MediaQuery.of(context).size.height / 4 +
+                    AppDimen.smallPadding,
+                left: MediaQuery.of(context).size.width / 4,
+                child: Image(
+                  fit: BoxFit.contain,
+                  image: AppIcons.play_icon,
+                  // fit: BoxFit.fitHeight,
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: AppDimen.xxxlPadding * 2),
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 4 +
+                      AppDimen.smallPadding,
+                ),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Container(
@@ -154,7 +155,7 @@ class RouteDetailsWidget extends StatelessWidget {
   Widget _pointsGallery() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
-      height: _listViewSize,
+      height: _listViewHeight,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: points.length,
