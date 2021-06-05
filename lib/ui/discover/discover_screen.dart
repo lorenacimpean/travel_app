@@ -114,7 +114,7 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
           margin: EdgeInsets.only(
               left: AppDimen.defaultPadding,
               right: AppDimen.defaultPadding,
-              bottom: AppDimen.defaultPadding),
+              bottom: AppDimen.largePadding),
           child: ClipRRect(
             borderRadius: BorderRadius.all(
               Radius.circular(
