@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Row(
       children: [
         Image(
-          image: AppIcons.lights,
+          image: AppIcons.mainPhoto,
         ),
         Text(title)
       ],
