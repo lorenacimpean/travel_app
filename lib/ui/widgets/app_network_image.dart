@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:travel_app/themes/app_colors.dart';
 
 class AppNetworkImage extends StatelessWidget {
-  static final _defaultImageHeight = 200.0;
+  final imageHeight;
+  final imageWidth;
   final String url;
 
-  const AppNetworkImage(
+  AppNetworkImage(
     this.url, {
     Key key,
+    this.imageHeight = 200.0,
+    this.imageWidth = 200.0,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).accentColor,
-      height: _defaultImageHeight,
-      width: _defaultImageHeight,
+      height: imageHeight,
+      width: imageWidth,
       child: Image.network(
         url ?? "",
         fit: BoxFit.fill,
