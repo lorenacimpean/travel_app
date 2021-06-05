@@ -72,6 +72,7 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
                   children: [
                     RoundContainerWidget(
                       widgetType: WidgetType.photoOverlay,
+                      imgUrl: widget.point.imageUrl,
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
