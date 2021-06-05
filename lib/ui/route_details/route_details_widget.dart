@@ -21,7 +21,7 @@ class RouteDetailsWidget extends StatelessWidget {
   final Function(List<PointModel>) onOpenMapsTapped;
   final Function(PointModel) onPointTapped;
 
-  static final double _listViewHeight = 200;
+  static final double _photoSIze = 200;
 
   RouteDetailsWidget({
     Key key,
@@ -120,25 +120,8 @@ class RouteDetailsWidget extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
             child: Text(
-              AppStrings.startPoint,
-              style: AppTextStyle.headline2.copyWith(),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
-            child: Text(
-              "Start point from points ",
-              style: AppTextStyle.subtitle2.copyWith(
-                fontSize: AppDimen.subtitle1,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
-            child: Text(
               AppStrings.stops,
-              style: AppTextStyle.headline2.copyWith(),
+              style: AppTextStyle.headline2,
             ),
           ),
           _pointsGallery(),
@@ -155,7 +138,7 @@ class RouteDetailsWidget extends StatelessWidget {
   Widget _pointsGallery() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: AppDimen.smallPadding),
-      height: _listViewHeight,
+      height: _photoSIze + AppDimen.largePadding,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: points.length,
@@ -164,13 +147,35 @@ class RouteDetailsWidget extends StatelessWidget {
             onTap: () => onPointTapped(points[index]),
             child: Padding(
               padding: EdgeInsets.all(AppDimen.smallPadding),
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(
-                    AppDimen.defaultCornerRadius,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(
+                        left: AppDimen.smallPadding,
+                        bottom: AppDimen.smallPadding),
+                    width: _photoSIze,
+                    child: Text(
+                      points[index].name,
+                      style: AppTextStyle.headline2.copyWith(
+                          fontSize: 14.0, fontWeight: FontWeight.normal),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
-                ),
-                child: AppNetworkImage(points[index]?.imageUrl),
+                  Expanded(
+                    child: Container(
+                      height: _photoSIze,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(
+                            AppDimen.defaultCornerRadius,
+                          ),
+                        ),
+                        child: AppNetworkImage(points[index]?.imageUrl),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           );
