@@ -17,7 +17,7 @@ class AppNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).accentColor,
+      color: AppColors.white,
       height: imageHeight,
       width: imageWidth,
       child: Image.network(
