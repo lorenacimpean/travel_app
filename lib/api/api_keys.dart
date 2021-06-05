@@ -5,7 +5,7 @@ class ApiKey {
   static final String description = "description";
   static final String duration = "duration";
   static final String location = "location";
-  static final String imageUrl = "imageUrl";
+  static final String url = "url";
   static final String points = "points";
   static final String routes = "routes";
   static final String users = "users";

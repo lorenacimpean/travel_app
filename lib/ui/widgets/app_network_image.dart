@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:travel_app/themes/app_dimen.dart';
+import 'package:travel_app/themes/app_colors.dart';
 
 class AppNetworkImage extends StatelessWidget {
   static final _defaultImageHeight = 200.0;
@@ -18,15 +17,25 @@ class AppNetworkImage extends StatelessWidget {
       color: Theme.of(context).accentColor,
       height: _defaultImageHeight,
       width: _defaultImageHeight,
-      child: CachedNetworkImage(
-        imageUrl: url,
-        placeholder: (context, url) => Padding(
-          padding: EdgeInsets.all(AppDimen.largePadding),
-          child: CircularProgressIndicator(
-            backgroundColor: Theme.of(context).primaryColor,
-          ),
-        ),
-        errorWidget: (context, url, error) => Icon(
+      child: Image.network(
+        url ?? "",
+        fit: BoxFit.fill,
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: AppColors.primary,
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes
+                  : null,
+            ),
+          );
+        },
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace stackTrace) =>
+                Icon(
           Icons.error,
           color: Theme.of(context).primaryColor,
         ),
