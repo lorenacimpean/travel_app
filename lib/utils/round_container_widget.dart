@@ -14,10 +14,10 @@ class RoundContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _overlay());
+    return Scaffold(body: _overlay(context));
   }
 
-  Widget _overlay() {
+  Widget _overlay(BuildContext context) {
     switch (widgetType) {
       case WidgetType.navigation:
         return ClipOval(
@@ -39,8 +39,6 @@ class RoundContainerWidget extends StatelessWidget {
         return ClipOval(
           clipper: ColorClipper.photo(),
           child: Container(
-            // width: double.infinity,
-            // height: double.infinity,
             child: Image(
               image: AppIcons.lights,
             ),

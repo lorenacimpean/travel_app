@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:travel_app/models/point_model.dart';
 import 'package:travel_app/themes/app_dimen.dart';
+import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/themes/app_strings.dart';
 import 'package:travel_app/themes/app_text_styles.dart';
 import 'package:travel_app/ui/poi_info/poi_info_view_model.dart';
@@ -51,8 +52,7 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
             break;
           case OperationState.ok:
             _showLoading = false;
-            WidgetUtils.launchMapsBetweenPoints(
-                response.data.first, response.data.last);
+            WidgetUtils.launchMapsWithWayPoints(response.data);
             break;
         }
       });
@@ -75,8 +75,8 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        vertical: AppDimen.xlPadding,
-                        horizontal: AppDimen.largePadding,
+                        vertical: AppDimen.defaultPadding,
+                        horizontal: AppDimen.defaultPadding,
                       ),
                       child: Align(
                           alignment: Alignment.topLeft,
@@ -91,6 +91,16 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
                         child: BlurredButton(text: widget.point?.name ?? ""),
                       ),
                     ),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height / 4 +
+                          AppDimen.smallPadding,
+                      left: MediaQuery.of(context).size.width / 4,
+                      child: Image(
+                        fit: BoxFit.contain,
+                        image: AppIcons.play_icon,
+                        // fit: BoxFit.fitHeight,
+                      ),
+                    ),
                     _screenContent(),
                   ],
                 ),
@@ -101,7 +111,9 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
 
   Widget _screenContent() {
     return Padding(
-      padding: EdgeInsets.only(top: AppDimen.xxxlPadding * 2),
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).size.height / 4 + AppDimen.smallPadding,
+      ),
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Container(
