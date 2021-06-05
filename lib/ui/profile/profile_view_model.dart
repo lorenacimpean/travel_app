@@ -127,13 +127,23 @@ class ProfileViewModel {
       return Stream.value(_list);
     });
 
+    Stream<UIModel<bool>> _logoutStream = input.logout.flatMap((_) {
+      return _profileRepo
+          .logout()
+          .map((_) {
+            return UIModel.success(true);
+          })
+          .startWith(UIModel.loading())
+          .onErrorReturnWith((error) => UIModel.error(error));
+    });
     output = Output(
         MergeStream([
           _profileFields,
           _fieldsChanged,
           _onConfirm,
         ]),
-        _confirmResult);
+        _confirmResult,
+        _logoutStream);
   }
 }
 
@@ -141,13 +151,15 @@ class Input {
   final Subject<bool> onStart;
   final Subject<AppInputFieldModel> valueChanged;
   final Subject<bool> onConfirm;
+  final Subject<bool> logout;
 
-  Input(this.onStart, this.valueChanged, this.onConfirm);
+  Input(this.onStart, this.valueChanged, this.onConfirm, this.logout);
 }
 
 class Output {
   final Stream<List<AppInputFieldModel>> loadFields;
   final Stream<UIModel<bool>> onEditResult;
+  final Stream<UIModel<bool>> onLogout;
 
-  Output(this.loadFields, this.onEditResult);
+  Output(this.loadFields, this.onEditResult, this.onLogout);
 }

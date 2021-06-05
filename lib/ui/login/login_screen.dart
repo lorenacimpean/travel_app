@@ -55,8 +55,9 @@ class _LoginScreenState extends BaseState<LoginScreen> {
             break;
           case OperationState.ok:
             _showLoading = false;
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => DiscoverScreen()));
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => DiscoverScreen()),
+                (Route<dynamic> route) => false);
             break;
         }
       });

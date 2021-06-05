@@ -37,4 +37,8 @@ class ProfileRepo {
     String uuid = _auth.currentUser.uid;
     return _api.updateProfileData(uuid, data);
   }
+
+  Stream<void> logout() {
+    return _auth.signOut().asStream();
+  }
 }

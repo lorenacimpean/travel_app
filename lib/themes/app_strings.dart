@@ -31,7 +31,6 @@ class AppStrings {
 
   // Discover screen
   static const String discover = "Discover";
-
   static const String dummyText =
       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. ";
 
@@ -68,4 +67,7 @@ class AppStrings {
 
   static const String howCanWeHelp = "Hello! How can we help you?";
   static const String callSupport = "Call us";
+
+  //Profile screen
+  static const String logout = "Log out";
 }
