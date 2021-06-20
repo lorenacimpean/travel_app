@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:travel_app/api/api_keys.dart';
-import 'package:travel_app/api/firestore_api.dart';
 import 'package:travel_app/repo/auth_repo.dart';
+import 'package:travel_app/repo/profile_repo.dart';
 import 'package:travel_app/themes/app_icons.dart';
 import 'package:travel_app/ui/widgets/app_edit_text.dart';
 import 'package:travel_app/utils/dependencies_factory.dart';
@@ -14,18 +13,16 @@ import 'package:travel_app/utils/ui_model.dart';
 class SignUpViewModel {
   final Input input;
   final AuthRepo _authRepo;
-  final FirestoreApi _firestoreApi;
+  final ProfileRepo _profileRepo;
   Output output;
   List<AppInputFieldModel> _list = [];
   final AppTextValidator _validator;
 
   SignUpViewModel(this.input,
-      {AuthRepo authRepo,
-      AppTextValidator validator,
-      FirestoreApi firestoreApi})
+      {AuthRepo authRepo, AppTextValidator validator, ProfileRepo profileRepo})
       : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
         _validator = validator ?? DependenciesFactory.appTextValidator(),
-        _firestoreApi = firestoreApi ?? DependenciesFactory.fireStoreApi() {
+        _profileRepo = profileRepo ?? DependenciesFactory.fireStoreApi() {
     Stream<UIModel<bool>> _signUpResult = input.signUp.flatMap((value) {
       if (_list.areAllFieldsValid()) {
         return _authRepo
@@ -34,11 +31,9 @@ class SignUpViewModel {
                 password: _list?.last?.textValue)
             .asBroadcastStream()
             .flatMap((credential) {
-              String uid = credential.user.uid;
-              Map<String, dynamic> data = {
-                ApiKey.email: credential.user.email,
-              };
-              return _firestoreApi.updateProfileData(uid, data).map((_) {
+              return _profileRepo
+                  .updateProfileData(email: credential.user.email)
+                  .map((_) {
                 return UIModel.success(true);
               });
             })
