@@ -22,7 +22,7 @@ class SignUpViewModel {
       {AuthRepo authRepo, AppTextValidator validator, ProfileRepo profileRepo})
       : _authRepo = authRepo ?? DependenciesFactory.authRepo(),
         _validator = validator ?? DependenciesFactory.appTextValidator(),
-        _profileRepo = profileRepo ?? DependenciesFactory.fireStoreApi() {
+        _profileRepo = profileRepo ?? DependenciesFactory.profileRepo() {
     Stream<UIModel<bool>> _signUpResult = input.signUp.flatMap((value) {
       if (_list.areAllFieldsValid()) {
         return _authRepo
