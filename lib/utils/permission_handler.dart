@@ -8,19 +8,6 @@ import 'package:travel_app/ui/widgets/app_modal_widget.dart';
 import 'package:travel_app/ui/widgets/pink_button.dart';
 
 mixin PermissionHandler {
-  Stream<PermissionStatus> hasPermission(Permission permission) {
-    return permission.status.asStream();
-  }
-
-  Stream<PermissionStatus> requestPermission(Permission permission) {
-    return permission.request().asStream();
-  }
-
-  Stream<Map<Permission, PermissionStatus>> requestPermissions(
-      List<Permission> permissions) {
-    return permissions.request().asStream();
-  }
-
   Stream<bool> handleLocationPermission(BuildContext context, {int tries = 3}) {
     return Permission.locationAlways
         .request()

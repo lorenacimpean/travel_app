@@ -62,14 +62,13 @@ class DiscoverScreenState extends BaseState<DiscoverScreen>
         }
       });
     }));
+
     disposeLater(_vm.output.goToNext.listen((info) {
-      setState(() {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => RouteDetailsScreen(
-                  routeModel: info.routeModel,
-                  points: info.points,
-                )));
-      });
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => RouteDetailsScreen(
+                routeModel: info.routeModel,
+                points: info.points,
+              )));
     }));
   }
 
