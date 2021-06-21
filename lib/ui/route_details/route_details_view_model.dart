@@ -14,8 +14,6 @@ class RouteDetailsViewModel {
     this.input, {
     LocationRepo locationRepo,
   }) : _locationRepo = locationRepo ?? DependenciesFactory.locationRepo() {
-    Stream<bool> _goBack = input.onBackTapped;
-
     Stream<UIModel<List<LocationModel>>> _openMaps =
         input.onMapOpened.flatMap((points) {
       List<LocationModel> locations = [];
@@ -42,7 +40,6 @@ class RouteDetailsViewModel {
     });
 
     output = Output(
-      _goBack,
       _openMaps,
       _openPoiInfo,
     );
@@ -50,24 +47,20 @@ class RouteDetailsViewModel {
 }
 
 class Input {
-  final Subject<bool> onBackTapped;
   final Subject<List<PointModel>> onMapOpened;
   final Subject<PointModel> onPointTapped;
 
   Input(
-    this.onBackTapped,
     this.onMapOpened,
     this.onPointTapped,
   );
 }
 
 class Output {
-  final Stream<bool> goBack;
   final Stream<UIModel<List<LocationModel>>> openMaps;
   final Stream<PointModel> openPoiInfo;
 
   Output(
-    this.goBack,
     this.openMaps,
     this.openPoiInfo,
   );

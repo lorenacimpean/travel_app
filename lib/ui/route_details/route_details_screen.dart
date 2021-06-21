@@ -35,15 +35,11 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
     _vm = RouteDetailsViewModel(Input(
       PublishSubject(),
       PublishSubject(),
-      PublishSubject(),
     ));
     _bindViewModel();
   }
 
   void _bindViewModel() {
-    disposeLater(_vm.output.goBack.listen((_) {
-      Navigator.of(context).pop();
-    }));
     disposeLater(_vm.output.openMaps.listen((response) {
       setState(() {
         switch (response.state) {
@@ -78,7 +74,7 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
         : RouteDetailsWidget(
             points: widget.points,
             route: widget.routeModel,
-            onBackTapped: () => _vm.input.onBackTapped.add(true),
+            onBackTapped: () => Navigator.of(context).pop(),
             onOpenMapsTapped: (points) {
               _vm.input.onMapOpened.add(points);
             },
