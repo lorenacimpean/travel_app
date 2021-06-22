@@ -13,7 +13,7 @@ class PoiInfoViewModel {
   PoiInfoViewModel(this.input, {LocationRepo locationRepo})
       : _locationRepo = locationRepo ?? DependenciesFactory.locationRepo() {
     Stream<UIModel<List<LocationModel>>> _openMaps =
-        input.onMapsTapped.flatMap((point) {
+        input.onOpenMapTapped.flatMap((point) {
       List<LocationModel> locations = [];
       return _locationRepo
           .getLocation()
@@ -30,9 +30,9 @@ class PoiInfoViewModel {
 }
 
 class Input {
-  final Subject<PointModel> onMapsTapped;
+  final Subject<PointModel> onOpenMapTapped;
 
-  Input(this.onMapsTapped);
+  Input(this.onOpenMapTapped);
 }
 
 class Output {

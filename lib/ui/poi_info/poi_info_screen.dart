@@ -170,7 +170,7 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
                 Center(
                     child: PinkButton(
                   text: AppStrings.openMaps,
-                  onTap: () => _vm.input.onMapsTapped.add(widget.point),
+                  onTap: () => _vm.input.onOpenMapTapped.add(widget.point),
                 )),
               ],
             ),

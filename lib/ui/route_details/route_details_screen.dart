@@ -57,6 +57,7 @@ class RouteDetailsScreenState extends BaseState<RouteDetailsScreen> {
         }
       });
     }));
+
     disposeLater(_vm.output.openPoiInfo.listen((point) {
       Navigator.push(
           context,
