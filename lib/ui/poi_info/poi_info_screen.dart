@@ -41,21 +41,19 @@ class PoiInfoScreenState extends BaseState<PoiInfoScreen> {
 
   void _bindViewModel() {
     disposeLater(_vm.output.openMaps.listen((response) {
-      setState(() {
-        switch (response.state) {
-          case OperationState.loading:
-            _showLoading = true;
-            break;
-          case OperationState.error:
-            _showLoading = false;
-            displayErrorModal(context, response.error);
-            break;
-          case OperationState.ok:
-            _showLoading = false;
-            WidgetUtils.launchMapsWithWayPoints(response.data);
-            break;
-        }
-      });
+      switch (response.state) {
+        case OperationState.loading:
+          _showLoading = true;
+          break;
+        case OperationState.error:
+          _showLoading = false;
+          displayErrorModal(context, response.error);
+          break;
+        case OperationState.ok:
+          _showLoading = false;
+          WidgetUtils.launchMapsWithWayPoints(response.data);
+          break;
+      }
     }));
   }
 
