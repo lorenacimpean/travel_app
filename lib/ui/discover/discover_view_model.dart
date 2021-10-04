@@ -17,7 +17,7 @@ class DiscoverViewModel {
           return _routeRepo.routes.map((routes) => UIModel.success(routes));
         })
         .startWith(UIModel.loading())
-        .onErrorReturnWith((error) => UIModel.error(error));
+        .onErrorReturnWith((error, stacktrace) => UIModel.error(error));
 
     Stream<RouteInfo> _goToNext = input.onRouteTapped.flatMap((route) {
       return _routeRepo.getPoints(route.pointIds).map((list) {

@@ -23,7 +23,7 @@ class PoiInfoViewModel {
             return UIModel.success(locations);
           })
           .startWith(UIModel.loading())
-          .onErrorReturnWith((error) => UIModel.error(error));
+          .onErrorReturnWith((error, stacktrace) => UIModel.error(error));
     });
     output = Output(_openMaps);
   }

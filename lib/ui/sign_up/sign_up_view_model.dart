@@ -38,7 +38,7 @@ class SignUpViewModel {
               });
             })
             .startWith(UIModel.loading())
-            .onErrorReturnWith((error) {
+            .onErrorReturnWith((error, stacktrace) {
               return UIModel.error(error);
             });
       }

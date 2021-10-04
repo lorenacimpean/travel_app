@@ -31,7 +31,7 @@ class LoginViewModel {
             .map((result) {
           debugPrint("Successfully logged in");
           return UIModel.success(true);
-        }).onErrorReturnWith((error) {
+        }).onErrorReturnWith((error, stacktrace) {
           debugPrint("${error.toString()}");
           return UIModel.error(error);
         });

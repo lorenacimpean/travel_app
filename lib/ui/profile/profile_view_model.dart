@@ -39,7 +39,7 @@ class ProfileViewModel {
               return UIModel.success(true);
             })
             .startWith(UIModel.loading())
-            .onErrorReturnWith((error) => UIModel.error(error));
+            .onErrorReturnWith((error, stacktrace) => UIModel.error(error));
       }
       return Stream.empty();
     });
@@ -134,7 +134,7 @@ class ProfileViewModel {
             return UIModel.success(true);
           })
           .startWith(UIModel.loading())
-          .onErrorReturnWith((error) => UIModel.error(error));
+          .onErrorReturnWith((error, stacktrace) => UIModel.error(error));
     });
     output = Output(
         MergeStream([

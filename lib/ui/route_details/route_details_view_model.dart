@@ -27,7 +27,7 @@ class RouteDetailsViewModel {
             return UIModel.success(locations);
           })
           .startWith(UIModel.loading())
-          .onErrorReturnWith((error) => UIModel.error(error));
+          .onErrorReturnWith((error, stacktrace) => UIModel.error(error));
     });
 
     Stream<PointModel> _openPoiInfo = input.onPointTapped.flatMap((point) {
